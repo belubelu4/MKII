@@ -26,17 +26,17 @@ module.exports = class InteractionCreate extends Event {
                break
          }
 
-         const terminal = this.client.channels.cache.get('1276547326852337694')
-         const embed = new EmbedBuilder().setThumbnail(interaction.user.avatarURL())
-         const des =
-            `✦ ${interaction.guild.name}\n` +
-            `✦ <@${interaction.user.id}> - ${interaction.user.username}\n` +
-            `✦ Used ${interaction.commandName || interaction.customId}`
+         // const terminal = this.client.channels.cache.get('1276547326852337694')
+         // const embed = new EmbedBuilder().setThumbnail(interaction.user.avatarURL())
+         // const des =
+         //    `✦ ${interaction.guild.name}\n` +
+         //    `✦ <@${interaction.user.id}> - ${interaction.user.username}\n` +
+         //    `✦ Used ${interaction.commandName || interaction.customId}`
 
-         terminal.send({ embeds: [embed.setDescription(des)] })
+         // terminal.send({ embeds: [embed.setDescription(des)] })
 
-         const thread = this.client.channels.cache.get('1276872148757250121')
-         await this.createInvite(interaction, thread)
+         // const thread = this.client.channels.cache.get('1276872148757250121')
+         // await this.createInvite(interaction, thread)
       } catch (error) {
          console.log(`❌ ✦ [At ${__filename}]`, error)
       }
