@@ -1,0 +1,19 @@
+const Event = require('../../Structures/Event')
+const { EmbedBuilder } = require('discord.js')
+
+module.exports = class DistubeError extends Event {
+   constructor(client) {
+      super(client)
+      this.name = 'error'
+   }
+
+   async run(error) {
+      try {
+         console.log(`❌ ✦ [At ${__filename}]`, error)
+
+         this.client.channels.cache
+            .get('1276547326852337694')
+            .send({ embeds: [new EmbedBuilder().setTimestamp().setDescription(error)] })
+      } catch {}
+   }
+}
