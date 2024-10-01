@@ -21,4 +21,14 @@ module.exports = class Button {
          console.log(error)
       }
    }
+
+   removeMessage(message, time) {
+      setTimeout(async () => {
+         try {
+            if (message) await message.delete().catch(() => {})
+         } catch (error) {
+            // console.log(error)
+         }
+      }, time)
+   }
 }

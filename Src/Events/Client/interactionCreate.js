@@ -46,7 +46,7 @@ module.exports = class InteractionCreate extends Event {
       return interaction.user.id === this.config.admin.id
    }
    inVoice(interaction) {
-      return !!interaction.member.voice.channelId
+      return interaction.member.voice.channelId
    }
 
    async processModalSubmit(interaction) {

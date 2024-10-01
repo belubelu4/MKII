@@ -10,6 +10,10 @@ module.exports = class Command {
       return this.client.config
    }
 
+   get player() {
+      return this.client.player
+   }
+
    async run(...args) {}
 
    async execute(...args) {
