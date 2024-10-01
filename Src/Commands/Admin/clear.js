@@ -9,13 +9,13 @@ module.exports = class Clear extends Command {
    }
 
    async run(interaction, embed) {
+      this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Meowing')] }), 5000)
+
       const guilds = this.client.guilds.cache
 
       for (const guild of guilds.values()) {
          await this.clearPlayerMessages(guild)
       }
-
-      this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Messages cleared')] }), 5000)
    }
 
    async clearPlayerMessages(guild) {
