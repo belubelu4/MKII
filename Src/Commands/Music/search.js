@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
-const { formatTime, deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { formatTime, sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Search extends Command {
    constructor(client) {
-      super(client, true)
-
+      super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder()
          .setName('search')
          .setDescription('✦ Search music')
@@ -27,7 +27,7 @@ module.exports = class Search extends Command {
          const searchOptions = { type: 'video', limit: 10, safeSearch: false }
          const songs = type === 0 ? await engine.search(query, searchOptions) : await engine.search(query)
 
-         if (!songs || !songs.length) return deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ No result')] }), 5000)
+         if (!songs || !songs.length) return this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ No result')] }), 5000)
 
          embed
             .setAuthor({ name: this.config.embed.author.search, iconURL: interaction.guild.iconURL() })
@@ -57,10 +57,10 @@ module.exports = class Search extends Command {
          listener.on('collect', async (button) => {
             if (button.customId === 'searchClose') {
                listener.stop()
-               return deleteMessage(message, 100)
+               return this.removeMessage(message, 100)
             }
             if (button.customId.startsWith('search')) {
-               deleteMessage(message, 100)
+               this.removeMessage(message, 100)
                await this.player.play(interaction.member.voice.channel, songs[Number(button.customId.replace('search', '')) - 1].url, {
                   member: interaction.member,
                   textChannel: interaction.channel,
@@ -70,7 +70,7 @@ module.exports = class Search extends Command {
             }
          })
 
-         listener.on('end', () => deleteMessage(message, 100))
+         listener.on('end', () => this.removeMessage(message, 100))
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.log(`❌ ✦ [At ${__filename}]`, error)

@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { getSeconds, deleteMessage, formatTime, sendErrorEmbed } = require('../../Functions')
+const { getSeconds, formatTime, sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Seek extends Command {
    constructor(client) {
       super(client)
-
       this.data = new SlashCommandBuilder()
          .setName('seek')
          .setDescription('✦ Jump to the timestamp')
@@ -42,7 +41,7 @@ module.exports = class Seek extends Command {
             embed.setDescription(`✦ Seeked to ${formatTime(queue.currentTime, false)}`)
          }
 
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
+         this.removeMessage(await interaction.editReply({ embeds: [embed] }), 5000)
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.log(`❌ ✦ [At ${__filename}]`, error)

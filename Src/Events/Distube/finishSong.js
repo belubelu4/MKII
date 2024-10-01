@@ -7,11 +7,7 @@ module.exports = class FinishSong extends Event {
    }
 
    async run(queue) {
-      try {
-         if (queue.listener) await queue.listener.stop()
-         if (queue.playerMessage) await queue.playerMessage.delete().catch(() => {})
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      if (queue.listener) await queue.listener.stop()
+      if (queue.playerMessage) await queue.playerMessage.delete().catch(() => {})
    }
 }

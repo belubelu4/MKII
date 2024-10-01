@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Volume extends Command {
@@ -15,7 +15,7 @@ module.exports = class Volume extends Command {
    async run(interaction, embed) {
       const queue = this.player.getQueue(interaction.guild.id)
       const vol = interaction.options.getInteger('volume')
-      const maxVol = this.config.player.maxVol
+      const maxVol = 100
 
       try {
          if (!queue || !queue.playing) {
@@ -29,7 +29,7 @@ module.exports = class Volume extends Command {
             embed.setDescription(`✦ Set volume to ${vol}`)
          }
 
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
+         this.removeMessage(await interaction.editReply({ embeds: [embed] }), 10000)
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.log(`❌ ✦ [At ${__filename}]`, error)

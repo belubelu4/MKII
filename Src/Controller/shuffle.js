@@ -7,14 +7,10 @@ module.exports = class PlayerShuffle extends Button {
    }
 
    async run(interaction, queue) {
-      try {
-         await queue.shuffle()
-         queue.playerEmbed.setFooter({
-            text: `✦ 🌱 Shuffled by ${interaction.user.globalName}`,
-            iconURL: interaction.user.avatarURL(),
-         })
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      await queue.shuffle()
+      queue.playerEmbed.setFooter({
+         text: `✦ 🌱 Shuffled by ${interaction.user.globalName}`,
+         iconURL: interaction.user.avatarURL(),
+      })
    }
 }

@@ -1,28 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, strict, isOwner, isAdmin } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Clear extends Command {
    constructor(client) {
       super(client)
+      this.isAdmin = true
       this.data = new SlashCommandBuilder().setName('clear').setDescription('✦ Clear player messages in all guilds')
    }
 
    async run(interaction, embed) {
-      if (!isOwner(interaction) && !isAdmin(interaction)) return strict(interaction)
+      const guilds = this.client.guilds.cache
 
-      try {
-         const guilds = this.client.guilds.cache
-
-         for (const guild of guilds.values()) {
-            await this.clearPlayerMessages(guild)
-         }
-
-         deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Messages cleared')] }), 5000)
-      } catch (error) {
-         console.error(`❌ Error in command [At ${__filename}]:`, error)
-         await interaction.editReply({ content: '❌ An error occurred while clearing messages.', embeds: [embed] })
+      for (const guild of guilds.values()) {
+         await this.clearPlayerMessages(guild)
       }
+
+      this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Messages cleared')] }), 5000)
    }
 
    async clearPlayerMessages(guild) {

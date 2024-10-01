@@ -1,7 +1,6 @@
 module.exports = class Event {
    constructor(client) {
       this.client = client
-      this.name = 'cc'
    }
 
    get player() {
@@ -24,7 +23,23 @@ module.exports = class Event {
       return this.client.config
    }
 
-   async run(...args) {
-      throw new Error('Method "run()" must be implemented')
+   async run(...args) {}
+
+   async execute(...args) {
+      try {
+         await this.run(...args)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+   removeMessage(message, time) {
+      setTimeout(async () => {
+         try {
+            if (message) await message.delete().catch(() => {})
+         } catch (error) {
+            // console.log(error)
+         }
+      }, time)
    }
 }

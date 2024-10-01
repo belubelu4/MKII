@@ -1,18 +1,32 @@
 module.exports = class Command {
-   constructor(client, inVoice = false) {
+   constructor(client) {
       this.client = client
-      this.inVoice = inVoice
-   }
-   
-   get player() {
-      return this.client.player
+      this.isAdmin = false
+      this.inVoice = false
+      this.playing = false
    }
 
    get config() {
       return this.client.config
    }
 
-   async run(...args) {
-      throw new Error('Method "run()" must be implemented.')
+   async run(...args) {}
+
+   async execute(...args) {
+      try {
+         await this.run(...args)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+   removeMessage(message, time) {
+      setTimeout(async () => {
+         try {
+            if (message) await message.delete().catch(() => {})
+         } catch (error) {
+            // console.log(error)
+         }
+      }, time)
    }
 }

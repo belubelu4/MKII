@@ -1,10 +1,11 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
-const { description, deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { description, sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Filter extends Command {
    constructor(client) {
-      super(client, true)
+      super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder().setName('filter').setDescription('✦ Modify filters')
    }
 
@@ -13,7 +14,7 @@ module.exports = class Filter extends Command {
 
       try {
          if (!queue || !queue.playing) {
-            return deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ No music is playing')] }), 10000)
+            return this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ No music is playing')] }), 10000)
          }
 
          embed
@@ -51,7 +52,7 @@ module.exports = class Filter extends Command {
             await button.editReply({ embeds: [embed], components: [row] })
          })
 
-         collector.on('end', () => deleteMessage(message, 100))
+         collector.on('end', () => this.removeMessage(message, 100))
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.error(`❌ ✦ [At ${__filename}]`, error)

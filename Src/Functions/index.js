@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 const { Playlist } = require('distube')
 const { google } = require('googleapis')
 
@@ -20,17 +20,14 @@ module.exports = {
    playMusic,
    description,
    getSeconds,
-   deleteMessage,
+   removeMessage,
    capFirstChar,
    formatTime,
    updateEmbed,
    updateButtons,
    isFit,
-   biModeLoop,
-   triModeLoop,
    generateQueuePage,
    queueActionRow,
-   showModal,
    sendErrorEmbed,
    emitError,
    printData,
@@ -50,7 +47,7 @@ function hasRole(interaction) {
 }
 
 async function strict(interaction) {
-   return deleteMessage(await interaction.reply({ content: 'Im Sleeping :3' }), 10000)
+   return removeMessage(await interaction.reply({ content: 'Im Sleeping :3' }), 10000)
 }
 
 // #region Auth
@@ -86,7 +83,7 @@ async function handleCommand(interaction) {
 
    if (command.inVoice && !interaction.member.voice.channelId) {
       embed.setDescription('✦ Please Join Voice Channel')
-      return deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
+      return removeMessage(await interaction.editReply({ embeds: [embed] }), 10000)
    }
 
    try {
@@ -109,12 +106,12 @@ async function addModal(interaction, embed) {
    const query = interaction.fields.getTextInputValue('playerAddInput').split('--')
 
    if (!interaction.member.voice.channel) {
-      deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Please join voice channel')] }), 5000)
+      removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Please join voice channel')] }), 5000)
    } else {
       const msg = await interaction.editReply({ embeds: [embed.setDescription('✦ Meowing')] })
 
       await playMusic(interaction, query[0], query[1])
-      deleteMessage(msg, 3000)
+      removeMessage(msg, 3000)
    }
 }
 
@@ -267,8 +264,8 @@ function getSeconds(str) {
    return totalSeconds
 }
 
-// #region deleteMessage
-function deleteMessage(message, time) {
+// #region removeMessage
+function removeMessage(message, time) {
    setTimeout(async () => {
       try {
          if (message) await message.delete().catch(() => {})
@@ -332,12 +329,7 @@ async function isFit(url) {
 }
 
 // #region Loop
-async function biModeLoop(queue) {
-   await queue.setRepeatMode(queue.repeatMode === 2 ? 1 : 2)
-}
-async function triModeLoop(queue) {
-   await queue.setRepeatMode(queue.repeatMode === 2 ? 0 : queue.repeatMode + 1)
-}
+
 
 // #region Queue
 function generateQueuePage(client, queue, start, page, total, pageLength, songList) {
@@ -360,15 +352,11 @@ function queueActionRow(page, total) {
 }
 
 // #region showModal
-async function showModal(interaction, customId, title, inputId, label, placeholder) {
-   const textInput = new TextInputBuilder().setCustomId(inputId).setLabel(label).setStyle('Short').setPlaceholder(placeholder)
-   const modal = new ModalBuilder().setCustomId(customId).setTitle(title).addComponents(new ActionRowBuilder().addComponents(textInput))
-   await interaction.showModal(modal)
-}
+
 
 // #region sendError
 async function sendErrorEmbed(interaction, embed) {
-   deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Something went wrong. Please try reconnecting me ><')] }), 10000)
+   removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Something went wrong. Please try reconnecting me ><')] }), 10000)
 }
 function emitError(file, error) {
    console.log(`❌ ✦ [At ${file}]`, error)

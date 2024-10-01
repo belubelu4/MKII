@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, isOwner, isAdmin, strict } = require('../../Functions')
+const { isOwner} = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Settings extends Command {
    constructor(client) {
       super(client)
-
+      this.isAdmin = true
       this.data = new SlashCommandBuilder()
          .setName('settings')
          .setDescription('✦ Edit settings of the bot')
@@ -33,7 +33,6 @@ module.exports = class Settings extends Command {
    }
 
    async run(interaction, embed) {
-      if (!isOwner(interaction) && !isAdmin(interaction)) return strict(interaction)
       const subcommand = interaction.options.getSubcommand()
 
       try {
@@ -62,7 +61,7 @@ module.exports = class Settings extends Command {
                   handler(option.value, interaction)
                }
             }
-            deleteMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Settings updated successfully')] }), 10000)
+            this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Settings updated successfully')] }), 10000)
          } else if (subcommand === 'view') {
             embed.setAuthor({ name: this.config.embed.author.settings, iconURL: interaction.guild.iconURL() }).addFields(
                { name: '✦ Owner ID', value: this.config.owner.id || '✦ Not set', inline: true },
@@ -85,7 +84,7 @@ module.exports = class Settings extends Command {
                { name: '✦ Author SoundCloud', value: this.config.embed.author.soundcloud, inline: false }
             )
 
-            deleteMessage(await interaction.editReply({ embeds: [embed] }), 120000)
+            this.removeMessage(await interaction.editReply({ embeds: [embed] }), 120000)
          }
       } catch (error) {
          console.log(`❌ ✦ [At ${__filename}]`, error)

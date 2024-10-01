@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { formatTime, deleteMessage, getAddSongEmbed } = require('../Functions')
+const { formatTime, getAddSongEmbed } = require('../Functions')
 const Button = require('../Structures/Button')
 
 module.exports = class PlayerGrab extends Button {
@@ -9,35 +9,31 @@ module.exports = class PlayerGrab extends Button {
    }
 
    async run(interaction, queue) {
-      try {
-         const song = queue.songs[0]
-         const grabEmbed = new EmbedBuilder()
-            .setColor(this.config.embed.color)
-            .setImage(this.config.embed.image)
-            .setAuthor({ name: this.config.embed.author.grab, iconURL: queue.textChannel.guild.iconURL() })
-            .setDescription(`✦ Have a nice day <@${interaction.user.id}>\n\`\`\`${song.url}\`\`\``)
-            .setFooter({
-               text: `🌱 Time ${formatTime(queue.currentTime, false)} / ${formatTime(song.duration, song.isLive)}`,
-               iconURL: interaction.user.avatarURL(),
-            })
-            .setTimestamp()
-
-         deleteMessage(await queue.textChannel.send({ embeds: [grabEmbed] }), 40000)
-         queue.playerEmbed.setFooter({
-            text: `✦ 🥝 Song revealed by ${interaction.user.globalName}`,
+      const song = queue.songs[0]
+      const grabEmbed = new EmbedBuilder()
+         .setColor(this.config.embed.color)
+         .setImage(this.config.embed.image)
+         .setAuthor({ name: this.config.embed.author.grab, iconURL: queue.textChannel.guild.iconURL() })
+         .setDescription(`✦ Have a nice day <@${interaction.user.id}>\n\`\`\`${song.url}\`\`\``)
+         .setFooter({
+            text: `🌱 Time ${formatTime(queue.currentTime, false)} / ${formatTime(song.duration, song.isLive)}`,
             iconURL: interaction.user.avatarURL(),
          })
+         .setTimestamp()
 
-         const channel = this.client.channels.cache.get('1256209937810456607')
-         if (!channel) return
-         channel.send(song.url)
-         channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
+      this.removeMessage(await queue.textChannel.send({ embeds: [grabEmbed] }), 40000)
+      queue.playerEmbed.setFooter({
+         text: `✦ 🥝 Song revealed by ${interaction.user.globalName}`,
+         iconURL: interaction.user.avatarURL(),
+      })
 
-         if (interaction.guild.id === this.client.config.guild.id) {
-            queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
-         }
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
+      const channel = this.client.channels.cache.get('1256209937810456607')
+      if (!channel) return
+      channel.send(song.url)
+      channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
+
+      if (interaction.guild.id === this.client.config.guild.id) {
+         queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
       }
    }
 }

@@ -1,4 +1,10 @@
 const config = require('./Src/config')
-const MeowApp = require('./Src/App')
 
-new MeowApp(config).arise()
+if (config.shard) {
+   const { ShardingManager } = require('discord.js')
+   const manager = new ShardingManager('./Src/App/index.js', { token: config.token })
+   manager.on('shardCreate', (shard) => console.log('✔️    ✦ 🌑 Launched shard -- ' + shard.id))
+   manager.spawn()
+} else {
+   require('./Src/App')
+}

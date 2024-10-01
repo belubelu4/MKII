@@ -8,10 +8,6 @@ module.exports = class AddList extends Event {
    }
 
    async run(queue, list) {
-      try {
-         queue.textChannel.send({ embeds: [getAddListEmbed(this.client, list)] }).catch(() => {})
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      queue.textChannel.send({ embeds: [getAddListEmbed(this.client, list)] }).catch(() => {})
    }
 }

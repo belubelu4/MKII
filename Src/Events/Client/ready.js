@@ -7,19 +7,31 @@ module.exports = class Ready extends Event {
       this.name = 'ready'
    }
 
-   async run(client) {
-      console.log('✔️    ✦ 🪐 From Pooba Saga With Luv')
-      console.log('✔️    ✦ 🧩 Logged in as -- ' + client.user.username)
+   async run() {
+      console.log('✔️    ✦ 🪐 From Booba Saga With Luv')
+      console.log('✔️    ✦ 🧩 Logged in as -- ' + this.client.user.username)
+      
+      this.setPresence(this.client)
+      this.makeGreeting(this.client)
 
+      const { guild, global } = this.config.test.status
+         ? { guild: this.client.interface.flat(), global: [] }
+         : { guild: this.client.interface[0], global: this.client.interface[1] }
+
+      await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.client.config.guild.id), { body: guild })
+      await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: global })
+   }
+
+   setPresence(client) {
       const states = [
-         '✦ おまえはもう死んでる ',
+         '✦ おまえはもう死んでる',
          '✦ From Ryo.o With ❤️‍🔥',
-         '✦ Playing /help 🍡',
          '✦ Musou Isshin ⚡',
          '✦ Booba Saga 🌻',
          '✦ Hypnotized 🫧',
          '✦ Eternity 🪐',
       ]
+
       setInterval(() => {
          client.user.setPresence({
             status: Math.random() < 0.4 ? 'online' : 'idle',
@@ -29,34 +41,27 @@ module.exports = class Ready extends Event {
             ],
          })
       }, 24000)
+   }
 
-      const { guild, global } = client.config.test.status
-      ? { guild: client.interface.flat(), global: [] }
-      : { guild: client.interface[0], global: client.interface[1] }
-
-      try {
-         await client.rest.put(Routes.applicationGuildCommands(client.user.id, client.config.guild.id), { body: guild })
-         await client.rest.put(Routes.applicationCommands(client.user.id), { body: global })
-
-         client.greeting = [
-            new EmbedBuilder()
-               .setColor(client.config.embed.color)
-               .setThumbnail(client.config.embed.thumbnail)
-               .setDescription(
-                  '✦ Wish you a happy music time, moah moah\n' +
+   makeGreeting(client) {
+      client.greeting = [
+         new EmbedBuilder()
+            .setColor(client.config.embed.color)
+            .setThumbnail(client.config.embed.thumbnail)
+            .setDescription(
+               '✦ Wish you a happy music time, moah moah\n' +
                   '✦ Click buttons below for more info\n' +
                   '✦ From Pooba Saga with luv\n' +
-                  '✦ ' + client.user.username + ' :3'
-               ),
-
-            new ActionRowBuilder().addComponents(
-               new ButtonBuilder({ label: 'Vote For Me', style: 5 }).setURL(client.config.invite.vote).setDisabled(!client.config.invite.status),
-               new ButtonBuilder({ label: 'Invite Me', style: 5 }).setURL(client.config.invite.url).setDisabled(!client.config.invite.status),
-               new ButtonBuilder({ label: 'Join Server', style: 5 }).setURL(client.config.invite.guild)
+                  '✦ ' +
+                  client.user.username +
+                  ' :3'
             ),
-         ]
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+
+         new ActionRowBuilder().addComponents(
+            new ButtonBuilder({ label: 'Vote For Me', style: 5 }).setURL(client.config.invite.vote).setDisabled(!client.config.invite.status),
+            new ButtonBuilder({ label: 'Invite Me', style: 5 }).setURL(client.config.invite.url).setDisabled(!client.config.invite.status),
+            new ButtonBuilder({ label: 'Join Server', style: 5 }).setURL(client.config.invite.guild)
+         ),
+      ]
    }
 }

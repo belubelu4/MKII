@@ -1,11 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Leave extends Command {
    constructor(client) {
       super(client)
-
       this.data = new SlashCommandBuilder().setName('leave').setDescription('✦ Make me leave voice channel')
    }
 
@@ -21,7 +19,7 @@ module.exports = class Leave extends Command {
          }
 
          const reply = await interaction.editReply({ embeds: [embed] })
-         deleteMessage(reply, 10000)
+         this.removeMessage(reply, 10000)
       } catch (error) {
          console.error(`❌ ✦ [At ${__filename}]`, error)
       }

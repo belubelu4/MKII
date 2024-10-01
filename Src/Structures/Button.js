@@ -1,6 +1,7 @@
 module.exports = class Button {
    constructor(client) {
       this.client = client
+      this.isAdmin = false
    }
 
    get player() {
@@ -11,7 +12,13 @@ module.exports = class Button {
       return this.client.config
    }
 
-   async run(...args) {
-      throw new Error('Method "run()" must be implemented.')
+   async run(...args) {}
+
+   async execute(...args) {
+      try {
+         await this.run(...args)
+      } catch (error) {
+         console.log(error)
+      }
    }
 }

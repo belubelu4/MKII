@@ -1,5 +1,5 @@
-const Event = require('../../Structures/Event')
 const { EmbedBuilder } = require('discord.js')
+const Event = require('../../Structures/Event')
 
 module.exports = class ClientError extends Event {
    constructor(client) {
@@ -8,12 +8,10 @@ module.exports = class ClientError extends Event {
    }
 
    async run(error) {
-      try {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
+      console.log(`❌ ✦ [At ${__filename}]`, error)
 
-         this.client.channels.cache
-            .get('1276547326852337694')
-            .send({ embeds: [new EmbedBuilder().setTimestamp().setDescription(error)] })
-      } catch {}
+      this.client.channels.cache
+         .get('1276547326852337694')
+         .send({ embeds: [new EmbedBuilder().setTimestamp().setDescription(error.message)] })
    }
 }

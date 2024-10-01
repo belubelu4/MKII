@@ -1,4 +1,3 @@
-const { triModeLoop } = require('../Functions')
 const Button = require('../Structures/Button')
 
 module.exports = class PlayerLoop extends Button {
@@ -8,15 +7,18 @@ module.exports = class PlayerLoop extends Button {
    }
 
    async run(interaction, queue) {
-      try {
-         await triModeLoop(queue)
-         const loopMode = ['✦ 🍟 Loop off', '✦ 🫓 Loop song', '✦ 🫓 Loop queue']
-         queue.playerEmbed.setFooter({
-            text: `${loopMode[queue.repeatMode]} by ${interaction.user.globalName}`,
-            iconURL: interaction.user.avatarURL(),
-         })
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      await this.triModeLoop(queue)
+      const loopMode = ['✦ 🍟 Loop off', '✦ 🫓 Loop song', '✦ 🫓 Loop queue']
+      queue.playerEmbed.setFooter({
+         text: `${loopMode[queue.repeatMode]} by ${interaction.user.globalName}`,
+         iconURL: interaction.user.avatarURL(),
+      })
+   }
+
+   async biModeLoop(queue) {
+      await queue.setRepeatMode(queue.repeatMode === 2 ? 1 : 2)
+   }
+   async triModeLoop(queue) {
+      await queue.setRepeatMode(queue.repeatMode === 2 ? 0 : queue.repeatMode + 1)
    }
 }

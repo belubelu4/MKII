@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Help extends Command {
@@ -32,7 +32,7 @@ module.exports = class Help extends Command {
                { name: '✦ Grab', value: 'Get current song info', inline: true },
                { name: '✦ Clear', value: 'Clear the queue', inline: true }
             )
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 120000)
+         this.removeMessage(await interaction.editReply({ embeds: [embed] }), 120000)
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.log(`❌ ✦ [At ${__filename}]`, error)

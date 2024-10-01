@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Remove extends Command {
    constructor(client) {
       super(client)
-
       this.data = new SlashCommandBuilder()
          .setName('remove')
          .setDescription('✦ Remove songs at a specific position')
@@ -36,7 +35,7 @@ module.exports = class Remove extends Command {
             embed.setDescription(description)
          }
 
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
+         this.removeMessage(await interaction.editReply({ embeds: [embed] }), 5000)
       } catch (error) {
          console.log(`❌ ✦ [At ${__filename}]`, error)
          sendErrorEmbed(interaction, embed)

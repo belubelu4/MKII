@@ -3,12 +3,20 @@ const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
-const fs = require('fs').promises
+const { promises } = require('fs')
 const cookies = require('../cookies')
+const config = require('../config')
 
-module.exports = class MeowApp extends Client {
-   constructor(config) {
-      super({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates] })
+class MeowApp extends Client {
+   constructor(config, cookies) {
+      super({
+         intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildVoiceStates,
+            // GatewayIntentBits.MessageContent
+         ],
+      })
 
       this.config = config
       this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(cookies), new SpotifyPlugin(), new SoundCloudPlugin()] })
@@ -26,35 +34,32 @@ module.exports = class MeowApp extends Client {
          this.loadButtons(__dirname + '/../Controller'),
       ])
 
-      this.login(config.token).catch(() => this.login(config.token))
+      this.login(this.config.token).catch(() => this.login(this.config.token))
+      this.arise()
    }
 
    arise() {
-      require('express')().get('/', (_, res) => res.send('🪐')).listen(4000)
+      require('express')().get('/', (req, res) => res.send('🪐')).listen(4000)
 
       process.env.YTDL_NO_UPDATE = true
       process.env.YTSR_NO_UPDATE = true
    }
 
    async loadModules(path, callback) {
-      try {
-         const files = await fs.readdir(path)
-         await Promise.all(
-            files.map(async (file) => {
-               const Module = require(`${path}/${file}`)
-               await callback(new Module(this))
-            })
-         )
-      } catch (error) {
-         console.log(error)
-      }
+      const files = await promises.readdir(path)
+      await Promise.all(
+         files.map(async (file) => {
+            const Module = require(`${path}/${file}`)
+            await callback(new Module(this))
+         })
+      )
    }
 
    async loadEvents(path) {
       const emitter = path.includes('Client') ? this : this.player
 
       await this.loadModules(path, async (event) => {
-         emitter.on(event.name, event.run.bind(event))
+         emitter.on(event.name, event.execute.bind(event))
       })
    }
 
@@ -79,3 +84,5 @@ module.exports = class MeowApp extends Client {
       })
    }
 }
+
+module.exports = new MeowApp(config, cookies)

@@ -5,6 +5,7 @@ module.exports = {
    api: process.env.api || '',
    shard: Boolean(process.env.shard),
    autoJoin: Boolean(process.env.autoJoin),
+   test: { status: Boolean(process.env.test) },
 
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },
@@ -62,12 +63,4 @@ module.exports = {
       url: 'https://discord.com/oauth2/authorize?client_id=1236709052331982978',
       guild: 'https://discord.gg/fTuGFk9ayG',
    },
-
-   player: {
-      maxVol: 100,
-   },
-
-   test: {
-      status: Boolean(process.env.test),
-   }
 }

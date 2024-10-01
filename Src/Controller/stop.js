@@ -7,11 +7,7 @@ module.exports = class PlayerStop extends Button {
    }
 
    async run(interaction, queue) {
-      try {
-         if (queue) await queue.stop()
-         if (queue.playerMessage) await queue.playerMessage.delete()
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      if (queue) await queue.stop()
+      if (queue.playerMessage) await queue.playerMessage.delete()
    }
 }

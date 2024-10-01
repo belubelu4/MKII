@@ -8,10 +8,6 @@ module.exports = class AddSong extends Event {
    }
 
    async run(queue, song) {
-      try {
-         queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
-      } catch (error) {
-         console.log(`❌ ✦ [At ${__filename}]`, error)
-      }
+      queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
    }
 }

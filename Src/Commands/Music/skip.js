@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { deleteMessage, sendErrorEmbed } = require('../../Functions')
+const { sendErrorEmbed } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Skip extends Command {
    constructor(client) {
       super(client)
-
       this.data = new SlashCommandBuilder()
          .setName('skip')
          .setDescription('✦ Skip current song')
@@ -41,7 +40,7 @@ module.exports = class Skip extends Command {
             }
          }
 
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
+         this.removeMessage(await interaction.editReply({ embeds: [embed] }), 10000)
       } catch (error) {
          sendErrorEmbed(interaction, embed)
          console.log(`❌ ✦ [At ${__filename}]`, error)
