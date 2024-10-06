@@ -52,7 +52,7 @@ module.exports = class InteractionCreate extends Event {
       await this.addModal(interaction, embed)
    }
    async addModal(interaction, embed) {
-      const msg = await interaction.editReply({ embeds: [embed.setDescription('✦ Meowing')] })
+      const msg = await interaction.reply({ embeds: [embed.setDescription('✦ Meowing')] })
       const query = interaction.fields.getTextInputValue('playerAddInput').split('--')
 
       await playMusic(interaction, query[0], query[1])
