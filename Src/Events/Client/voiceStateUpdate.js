@@ -3,8 +3,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class VoiceStateUpdate extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'voiceStateUpdate'
+      super(client, 'voiceStateUpdate')
    }
 
    async run(oldState, newState) {

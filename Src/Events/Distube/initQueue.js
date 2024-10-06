@@ -4,8 +4,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class InitQueue extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'initQueue'
+      super(client, 'initQueue')
    }
 
    async run(queue) {

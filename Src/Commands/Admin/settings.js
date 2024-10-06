@@ -19,6 +19,7 @@ module.exports = class Settings extends Command {
                .addStringOption ((option) => option.setName('embed-color').setDescription('✦ Set the embed color').setRequired(false))
                .addStringOption ((option) => option.setName('embed-thumbnail').setDescription('✦ Set the embed thumbnail URL').setRequired(false))
                .addStringOption ((option) => option.setName('embed-image').setDescription('✦ Set the embed image URL').setRequired(false))
+               .addBooleanOption((option) => option.setName('strict-mode').setDescription('✦ Set the strict status').setRequired(false))
                .addBooleanOption((option) => option.setName('invite-status').setDescription('✦ Set the invite status').setRequired(false))
                .addBooleanOption((option) => option.setName('auto-join').setDescription('✦ Set auto join status').setRequired(false))
                .addStringOption ((option) => option.setName('author-youtube-small').setDescription('✦ Set YouTube author').setRequired(false))
@@ -43,6 +44,7 @@ module.exports = class Settings extends Command {
             'embed-color':          (value) => (this.config.embed.color = value),
             'embed-thumbnail':      (value) => (this.config.embed.thumbnail = value),
             'embed-image':          (value) => (this.config.embed.image = value),
+            'strict-mode':          (value) => (this.config.strict = value),
             'invite-status':        (value) => (this.config.invite.status = value),
             'auto-join':            (value) => (this.config.autoJoin = value),
             'author-youtube-small': (value) => (this.config.embed.author.youtubes = value),
@@ -64,17 +66,18 @@ module.exports = class Settings extends Command {
             this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Settings updated successfully')] }), 10000)
          } else if (subcommand === 'view') {
             embed.setAuthor({ name: this.config.embed.author.settings, iconURL: interaction.guild.iconURL() }).addFields(
-               { name: '✦ Owner ID', value: this.config.owner.id || '✦ Not set', inline: true },
                { name: '✦ Admin ID', value: this.config.admin.id || '✦ Not set', inline: true },
-               { name: '✦ Guild ID', value: this.config.guild.id || '✦ Not set', inline: true },
+               { name: '✦ Shard', value: this.config.shard ? '✦ Enabled' : '✦ Disabled', inline: true },
+               { name: '✦ Strict Mode', value: this.config.strict ? '✦ Enabled' : '✦ Disabled', inline: true },
+
+               { name: '✦ Auto Join', value: this.config.autoJoin ? '✦ Enabled' : '✦ Disabled', inline: true },               
                { name: '✦ API', value: this.config.api || '✦ Not set', inline: false },
+               { name: '✦ DJ Role', value: this.config.users.roles.join(', ') || '✦ Not set', inline: true },
+               
                { name: '✦ Embed Color', value: this.config.embed.color || '✦ Not set', inline: true },
                { name: '✦ Embed Thumbnail', value: this.config.embed.thumbnail || '✦ Not set', inline: true },
                { name: '✦ Embed Image', value: this.config.embed.image || '✦ Not set', inline: true },
-               { name: '✦ Shard', value: this.config.shard ? '✦ Enabled' : '✦ Disabled', inline: true },
-               { name: '✦ Invite Status', value: this.config.invite.status ? '✦ Enabled' : '✦ Disabled', inline: true },
-               { name: '✦ Auto Join', value: this.config.autoJoin ? '✦ Enabled' : '✦ Disabled', inline: true },
-               { name: '✦ DJ Role', value: this.config.users.roles.join(', ') || '✦ Not set', inline: true },
+               
                { name: '✦ Icons YouTube', value: this.config.embed.icons.youtube, inline: true },
                { name: '✦ Icons Spotify', value: this.config.embed.icons.spotify, inline: true },
                { name: '✦ Icons SoundCloud', value: this.config.embed.icons.soundcloud, inline: true },

@@ -4,14 +4,14 @@ const Event = require('../../Structures/Event')
 
 module.exports = class PlaySong extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'playSong'
+      super(client, 'playSong')
    }
 
    async run(queue, song) {
       const { color, thumbnail, imageRoxy, author, icons } = this.config.embed
       const { name, url, duration, isLive, user, source } = song
       const { actionRows, textChannel, voiceChannel } = queue
+
       const options = {
          youtube: {
             thumbnail,
@@ -43,18 +43,5 @@ module.exports = class PlaySong extends Event {
          .setFooter({ text: `✦ 🧩 Requested by ${user.globalName}`, iconURL: user.avatarURL() })
 
       queue.playerMessage = await textChannel.send({ embeds: [queue.playerEmbed], components: actionRows })
-      queue.listener = queue.playerMessage.createMessageComponentCollector()
-
-      queue.listener.on('collect', async (interaction) => {
-         if (interaction.customId !== 'playerAdd') await interaction.deferUpdate()
-         if (!auth(interaction)) return await reject(interaction, 1)
-
-         await this.buttons
-            .get(interaction.customId)
-            .execute(interaction, queue)
-            .catch((error) => console.log('❌  ✦ 🥙 Button Error', error))
-
-         if (!['playerStop', 'playerAdd'].includes(interaction.customId)) await updateEmbed(queue)
-      })
    }
 }

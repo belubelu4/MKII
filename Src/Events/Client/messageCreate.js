@@ -2,8 +2,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class MessageCreate extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'messageCreate'
+      super(client, 'messageCreate')
    }
 
    async run(message) {

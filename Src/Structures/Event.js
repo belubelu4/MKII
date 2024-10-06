@@ -1,6 +1,7 @@
 module.exports = class Event {
-   constructor(client) {
+   constructor(client, name) {
       this.client = client
+      this.name = name
    }
 
    get player() {

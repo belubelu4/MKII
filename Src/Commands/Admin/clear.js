@@ -29,7 +29,7 @@ module.exports = class Clear extends Command {
 
    async clear(channel) {
       try {
-         const messages = await channel.messages.fetch({ limit: 100 })
+         const messages = await channel.messages.fetch({ limit: 50 })
          if (messages.size === 0) return
 
          const messagesToDelete = messages.filter((message) => this.shouldDelete(message))

@@ -2,8 +2,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class Disconnect extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'disconnect'
+      super(client, 'disconnect')
    }
 
    async run(queue) {

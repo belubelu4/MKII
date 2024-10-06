@@ -3,9 +3,10 @@ require('dotenv').config()
 module.exports = {
    token: process.env.token,
    api: process.env.api || '',
+   autoJoin: false,
+   strict: false,
    shard: Boolean(process.env.shard),
-   autoJoin: Boolean(process.env.autoJoin),
-   test: { status: Boolean(process.env.test) },
+   test: Boolean(process.env.test),
 
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },

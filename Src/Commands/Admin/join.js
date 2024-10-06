@@ -6,16 +6,13 @@ module.exports = class Join extends Command {
    constructor(client) {
       super(client)
       this.isAdmin = true
+      this.inVoice = true
       this.data = new SlashCommandBuilder().setName('join').setDescription('✦ Join voice channel')
    }
 
    async run(interaction, embed) {
       const voiceChannel = interaction.member.voice.channel
-      if (!voiceChannel) {
-         embed.setDescription(`✦ Join voice channel bae ~`)
-         return this.removeMessage(await interaction.editReply({ embeds: [embed] }), 5000)
-      }
-      
+
       joinVoiceChannel({
          channelId: voiceChannel.id,
          guildId: voiceChannel.guild.id,

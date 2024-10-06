@@ -3,8 +3,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class ClientError extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'error'
+      super(client, 'error')
    }
 
    async run(error) {

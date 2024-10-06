@@ -3,8 +3,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class Ready extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'ready'
+      super(client, 'ready')
    }
 
    async run() {
@@ -12,9 +11,9 @@ module.exports = class Ready extends Event {
       console.log('✔️    ✦ 🧩 Logged in as -- ' + this.client.user.username)
       
       this.setPresence(this.client)
-      this.makeGreeting(this.client)
+      this.initGreeting(this.client)
 
-      const { guild, global } = this.config.test.status
+      const { guild, global } = this.config.test
          ? { guild: this.client.interface.flat(), global: [] }
          : { guild: this.client.interface[0], global: this.client.interface[1] }
 
@@ -43,7 +42,7 @@ module.exports = class Ready extends Event {
       }, 24000)
    }
 
-   makeGreeting(client) {
+   initGreeting(client) {
       client.greeting = [
          new EmbedBuilder()
             .setColor(client.config.embed.color)

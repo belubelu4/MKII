@@ -211,25 +211,6 @@ async function getMix(url, api, handler) {
       return url
    }
 }
-// async function getMix(url, handler) {
-//    try {
-//       const response = await fetch(url)
-//       const data = await response.text()
-//       const urls = new Set()
-//       const regex = /\/watch\?v=([\w-]+)/g
-//       let match
-
-//       while ((match = regex.exec(data)) !== null) {
-//          urls.add(`https://www.youtube.com/watch?v=${match[1]}`)
-//       }
-
-//       const songs = await Promise.all(Array.from(urls).map((url) => handler.resolve(url)))
-//       return new Playlist({ source: 'youtube', songs, name: 'Youtube Mix', url, thumbnail: songs[0].thumbnail })
-//    } catch (error) {
-//       console.log('❌   ✦ 🍕 GetVideoUrls Error\n', error)
-//       return url
-//    }
-// }
 
 // #region Filter
 function description(queue) {

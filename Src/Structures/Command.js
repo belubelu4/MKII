@@ -3,7 +3,6 @@ module.exports = class Command {
       this.client = client
       this.isAdmin = false
       this.inVoice = false
-      this.playing = false
    }
 
    get config() {

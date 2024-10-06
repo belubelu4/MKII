@@ -4,41 +4,29 @@ const Event = require('../../Structures/Event')
 
 module.exports = class InteractionCreate extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'interactionCreate'
+      super(client, 'interactionCreate')
    }
 
    async run(interaction) {
-      if (interaction.isChatInputCommand()) {
-         await this.processCommand(interaction)
-      } else if (interaction.isAutocomplete()) {
-         await this.commands.get(interaction.commandName).suggest(interaction)
-      } else if (interaction.isModalSubmit()) {
-         await this.processModalSubmit(interaction)
+      const embed = new EmbedBuilder().setColor(this.config.embed.color)
+
+      if (!this.isOwner(interaction) && this.isMainGuild(interaction) && this.config.strict) {
+         embed.setDescription('✦ Nah, me enjoying dango ~')
+         return this.removeMessage(await interaction.reply({ embeds: [embed] }), 10000)
       }
+
+      if (interaction.isAutocomplete()) await this.commands.get(interaction.commandName).suggest(interaction)
+      else if (interaction.isChatInputCommand()) await this.processCommand(interaction, embed)
+      else if (interaction.isModalSubmit()) await this.processModalSubmit(interaction, embed)
+      else if (interaction.isButton()) await this.processButton(interaction)
 
       this.logInteraction(interaction)
       await this.createInvite(interaction)
    }
 
-   async processCommand(interaction) {
-      await interaction.deferReply()
-      const command = this.commands.get(interaction.commandName)
-      const embed = new EmbedBuilder().setColor(this.config.embed.color)
-
-      if (this.isOwner(interaction)) return await command.execute(interaction, embed)
-
-      if (command.isAdmin && !this.isAdmin(interaction)) {
-         embed.setDescription('✦ Just for my master ~')
-      } else if (command.inVoice && !this.inVoice(interaction)) {
-         embed.setDescription('✦ Please Join Voice Channel ~')
-      } else {
-         return await command.execute(interaction, embed)
-      }
-
-      this.removeMessage(await interaction.editReply({ embeds: [embed] }), 10000)
+   isMainGuild(interaction) {
+      return interaction.guild.id === this.config.guild.id
    }
-
    isOwner(interaction) {
       return interaction.user.id === this.config.owner.id
    }
@@ -49,10 +37,18 @@ module.exports = class InteractionCreate extends Event {
       return interaction.member.voice.channelId
    }
 
-   async processModalSubmit(interaction) {
+   async processCommand(interaction, embed) {
       await interaction.deferReply()
+      const command = this.commands.get(interaction.commandName)
 
-      const embed = new EmbedBuilder().setColor(this.config.embed.color)
+      if (!this.isOwner(interaction) && command.isAdmin && !this.isAdmin(interaction)) embed.setDescription('✦ Just for my master ~')
+      else if (command.inVoice && !this.inVoice(interaction)) embed.setDescription('✦ Please join voice channel bae ~')
+      else return await command.execute(interaction, embed)
+
+      this.removeMessage(await interaction.editReply({ embeds: [embed] }), 10000)
+   }
+
+   async processModalSubmit(interaction, embed) {
       await this.addModal(interaction, embed)
    }
    async addModal(interaction, embed) {
@@ -61,6 +57,23 @@ module.exports = class InteractionCreate extends Event {
 
       await playMusic(interaction, query[0], query[1])
       this.removeMessage(msg, 3000)
+   }
+
+   async processButton(interaction) {
+      if (interaction.customId !== 'playerAdd') await interaction.deferUpdate()
+      const queue = this.player.getQueue(interaction.guild.id)
+
+      await this.buttons
+         .get(interaction.customId)
+         .execute(interaction, queue)
+         .catch((error) => console.log('❌  ✦ 🥙 Button Error', error))
+
+      if (!['playerStop', 'playerAdd'].includes(interaction.customId)) await this.updateEmbed(queue)
+   }
+   async updateEmbed(queue) {
+      try {
+         if (queue.playerMessage) await queue.playerMessage.edit({ embeds: [queue.playerEmbed.setTimestamp()] })
+      } catch (error) {}
    }
 
    logInteraction(interaction) {

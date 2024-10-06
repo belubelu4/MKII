@@ -3,8 +3,7 @@ const Event = require('../../Structures/Event')
 
 module.exports = class AddSong extends Event {
    constructor(client) {
-      super(client)
-      this.name = 'addSong'
+      super(client, 'addSong')
    }
 
    async run(queue, song) {
