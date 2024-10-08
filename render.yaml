@@ -1,0 +1,12 @@
+services:
+- type: web
+  name: daulongvocung
+  runtime: node
+  repo: https://github.com/belubelu4/MKII
+  plan: free
+  envVars:
+  - fromGroup: env
+  region: oregon
+  buildCommand: npm install
+  startCommand: npm run start
+version: "1"
