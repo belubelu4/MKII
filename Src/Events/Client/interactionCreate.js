@@ -10,6 +10,14 @@ module.exports = class InteractionCreate extends Event {
    async run(interaction) {
       const embed = new EmbedBuilder().setColor(this.config.embed.color)
 
+      if (this.config.maintain) {
+         embed
+            .setDescription('✦ Me enjoying dango for a while, Comeback later bae ~\n✦ Maintaining :3')
+            .setThumbnail(this.config.embed.thumbnail)
+
+         return this.removeMessage(await interaction.reply({ embeds: [embed] }), 20000)
+      }
+
       if (!this.isOwner(interaction) && this.isMainGuild(interaction) && this.config.strict) {
          embed.setDescription('✦ Nah, me enjoying dango ~')
          return this.removeMessage(await interaction.reply({ embeds: [embed] }), 10000)

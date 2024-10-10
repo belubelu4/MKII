@@ -19,6 +19,7 @@ module.exports = class Settings extends Command {
                .addStringOption ((option) => option.setName('embed-color').setDescription('✦ Set the embed color').setRequired(false))
                .addStringOption ((option) => option.setName('embed-thumbnail').setDescription('✦ Set the embed thumbnail URL').setRequired(false))
                .addStringOption ((option) => option.setName('embed-image').setDescription('✦ Set the embed image URL').setRequired(false))
+               .addBooleanOption((option) => option.setName('maintain-mode').setDescription('✦ Set the maintain status').setRequired(false))
                .addBooleanOption((option) => option.setName('strict-mode').setDescription('✦ Set the strict status').setRequired(false))
                .addBooleanOption((option) => option.setName('invite-status').setDescription('✦ Set the invite status').setRequired(false))
                .addBooleanOption((option) => option.setName('auto-join').setDescription('✦ Set auto join status').setRequired(false))
@@ -28,7 +29,7 @@ module.exports = class Settings extends Command {
                .addStringOption ((option) => option.setName('author-soundcloud').setDescription('✦ Set SoundCloud author').setRequired(false))
                .addStringOption ((option) => option.setName('icons-youtube').setDescription('✦ Set the YouTube icon URL').setRequired(false))
                .addStringOption ((option) => option.setName('icons-spotify').setDescription('✦ Set the Spotify icon URL').setRequired(false))
-               .addStringOption ((option) => option.setName('icons-soundcloud').setDescription('✦ Set the SoundCloud icon URL').setRequired(false))
+               .addStringOption ((option) => option.setName('icons-sc').setDescription('✦ Set the SoundCloud icon URL').setRequired(false))
          )
          .addSubcommand((subcommand) => subcommand.setName('view').setDescription('✦ View settings'))
    }
@@ -44,6 +45,7 @@ module.exports = class Settings extends Command {
             'embed-color':          (value) => (this.config.embed.color = value),
             'embed-thumbnail':      (value) => (this.config.embed.thumbnail = value),
             'embed-image':          (value) => (this.config.embed.image = value),
+            'maintain-mode':        (value) => (this.config.maintain = value),
             'strict-mode':          (value) => (this.config.strict = value),
             'invite-status':        (value) => (this.config.invite.status = value),
             'auto-join':            (value) => (this.config.autoJoin = value),
@@ -53,7 +55,7 @@ module.exports = class Settings extends Command {
             'author-soundcloud':    (value) => (this.config.embed.author.soundcloud = value),
             'icons-youtube':        (value) => (this.config.embed.icons.youtube = value),
             'icons-spotify':        (value) => (this.config.embed.icons.spotify = value),
-            'icons-soundcloud':     (value) => (this.config.embed.icons.soundcloud = value),
+            'icons-sc':             (value) => (this.config.embed.icons.soundcloud = value),
          }
 
          if (subcommand === 'edit') {
@@ -68,6 +70,7 @@ module.exports = class Settings extends Command {
             embed.setAuthor({ name: this.config.embed.author.settings, iconURL: interaction.guild.iconURL() }).addFields(
                { name: '✦ Admin ID', value: this.config.admin.id || 'Not set', inline: true },
                { name: '✦ Strict Mode', value: this.config.strict ? 'Enabled' : 'Disabled', inline: true },
+               { name: '✦ Maintain Mode', value: this.config.maintain ? 'Enabled' : 'Disabled', inline: true },
                { name: '✦ Auto Join', value: this.config.autoJoin ? 'Enabled' : 'Disabled', inline: true },
 
                { name: '✦ API', value: this.config.api || 'Not set', inline: false },

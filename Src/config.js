@@ -5,6 +5,7 @@ module.exports = {
    api: process.env.api || '',
    autoJoin: false,
    strict: false,
+   maintain: false,
    shard: Boolean(process.env.shard),
    test: Boolean(process.env.test),
 
