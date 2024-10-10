@@ -10,7 +10,7 @@ module.exports = class InteractionCreate extends Event {
    async run(interaction) {
       const embed = new EmbedBuilder().setColor(this.config.embed.color)
 
-      if (this.config.maintain) {
+      if (!this.isOwner(interaction) && this.config.maintain) {
          embed
             .setDescription('✦ Me enjoying dango for a while, Comeback later bae ~\n✦ Maintaining :3')
             .setThumbnail(this.config.embed.thumbnail)
