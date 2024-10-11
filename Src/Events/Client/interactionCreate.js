@@ -11,9 +11,7 @@ module.exports = class InteractionCreate extends Event {
       const embed = new EmbedBuilder().setColor(this.config.embed.color)
 
       if (!this.isOwner(interaction) && this.config.maintain) {
-         embed
-            .setDescription('✦ Me enjoying dango for a while, Comeback later bae ~\n✦ Maintaining :3')
-            .setThumbnail(this.config.embed.thumbnail)
+         embed.setDescription('✦ Me enjoying dango for a while, Comeback later bae ~\n✦ Maintaining :3').setThumbnail(this.config.embed.thumbnail)
 
          return this.removeMessage(await interaction.reply({ embeds: [embed] }), 20000)
       }
@@ -28,8 +26,10 @@ module.exports = class InteractionCreate extends Event {
       else if (interaction.isModalSubmit()) await this.processModalSubmit(interaction, embed)
       else if (interaction.isButton()) await this.processButton(interaction)
 
-      this.logInteraction(interaction)
-      await this.createInvite(interaction)
+      if (this.client.isEi) {
+         this.logInteraction(interaction)
+         await this.createInvite(interaction)
+      }
    }
 
    isMainGuild(interaction) {

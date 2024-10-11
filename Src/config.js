@@ -60,7 +60,6 @@ module.exports = {
    },
 
    invite: {
-      status: Boolean(process.env.invite),
       vote: 'https://top.gg/bot/1236709052331982978/vote',
       url: 'https://discord.com/oauth2/authorize?client_id=1236709052331982978',
       guild: 'https://discord.gg/fTuGFk9ayG',
