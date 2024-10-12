@@ -24,15 +24,23 @@ class MeowApp extends Client {
       this.buttons = new Collection()
       this.chats = new Collection()
       this.interface = [[], []]
+      
+      this.init()
+   }
 
-      Promise.all([
-         this.loadEvents(__dirname + '/../Events/Client'),
-         this.loadEvents(__dirname + '/../Events/Distube'),
-         this.loadCommands(__dirname + '/../Commands/Admin'),
-         this.loadCommands(__dirname + '/../Commands/Music'),
-         this.loadChats(__dirname + '/../Chats'),
-         this.loadButtons(__dirname + '/../Controller'),
-      ])
+   async init() {
+      try {
+         Promise.all([
+            this.loadEvents(__dirname + '/../Events/Client'),
+            this.loadEvents(__dirname + '/../Events/Distube'),
+            this.loadCommands(__dirname + '/../Commands/Admin'),
+            this.loadCommands(__dirname + '/../Commands/Music'),
+            this.loadChats(__dirname + '/../Chats'),
+            this.loadButtons(__dirname + '/../Controller'),
+         ])
+      } catch (error) {
+         console.log(error)
+      }
 
       this.login(this.config.token).catch(() => this.login(this.config.token))
       this.arise()
