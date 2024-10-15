@@ -14,12 +14,15 @@ module.exports = class Ready extends Event {
       this.setPresence(this.client)
       this.initGreeting(this.client)
 
+      const entry = await this.client.rest.get(Routes.applicationCommands(this.client.user.id))
       const { guild, global } = this.config.test
          ? { guild: this.client.interface.flat(), global: [] }
          : { guild: this.client.interface[0], global: this.client.interface[1] }
 
       await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.client.config.guild.id), { body: guild })
-      await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: global })
+      await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: [...entry, ...global] })
+
+      
    }
 
    setPresence(client) {
