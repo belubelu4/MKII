@@ -20,7 +20,7 @@ module.exports = class Ready extends Event {
          : { guild: this.client.interface[0], global: this.client.interface[1] }
 
       await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.client.config.guild.id), { body: guild })
-      await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: [...entry, ...global] })
+      await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: [entry[0], ...global] })
 
       
    }
