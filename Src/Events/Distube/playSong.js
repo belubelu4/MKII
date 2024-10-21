@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { formatTime, updateEmbed, auth, reject, isFit } = require('../../Functions')
+const { formatTime, isFit } = require('../../Functions')
 const Event = require('../../Structures/Event')
 
 module.exports = class PlaySong extends Event {
@@ -16,7 +16,8 @@ module.exports = class PlaySong extends Event {
          youtube: {
             thumbnail,
             image: song.thumbnail,
-            author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
+            // author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
+            author: author.youtubel,
             icon: icons.youtube,
          },
          spotify: {

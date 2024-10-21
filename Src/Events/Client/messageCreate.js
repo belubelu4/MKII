@@ -6,8 +6,8 @@ module.exports = class MessageCreate extends Event {
    }
 
    async run(message) {
-      const chat = this.chats.get(message.content)
-      if (!chat) return
-      await chat.execute()
+      // const chat = this.chats.get(message.content)
+      // if (!chat) return
+      // await chat.execute()
    }
 }

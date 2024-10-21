@@ -2,8 +2,7 @@ const Button = require('../Structures/Button')
 
 module.exports = class PlayerLoop extends Button {
    constructor(client) {
-      super(client)
-      this.name = 'playerLoop'
+      super(client, 'playerLoop')
    }
 
    async run(interaction, queue) {

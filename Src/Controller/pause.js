@@ -1,10 +1,8 @@
-const { updateButtons } = require('../Functions')
 const Button = require('../Structures/Button')
 
 module.exports = class PlayerPause extends Button {
    constructor(client) {
-      super(client)
-      this.name = 'playerPause'
+      super(client, 'playerPause')
    }
 
    async run(interaction, queue) {
@@ -16,10 +14,18 @@ module.exports = class PlayerPause extends Button {
          queue.actionRows[1].components[2].setStyle(4).setEmoji(this.config.buttons.resume)
       }
 
-      updateButtons(queue)
+      this.updateButtons(queue)
       queue.playerEmbed.setFooter({
          text: `${queue.paused ? '✦ 💤 Paused' : '✦ 🍕 Resumed'} by ${interaction.user.globalName}`,
          iconURL: interaction.user.avatarURL(),
       })
+   }
+
+   async updateButtons(queue) {
+      try {
+         if (queue.playerMessage) await queue.playerMessage.edit({ components: queue.actionRows })
+      } catch (error) {
+         //console.log('❌   ✦ 🍕 UpdateButtons Error\n', error)
+      }
    }
 }

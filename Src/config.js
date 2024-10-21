@@ -12,10 +12,10 @@ module.exports = {
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },
    admin: { id: process.env.admin || '' },
-   users: { roles: [process.env.role || '753284454952337589'] },
+   users: { roles: ['753284454952337589'] },
 
    embed: {
-      color: process.env.color || '2B2D31',
+      color: '2B2D31',
       thumbnail: process.env.thumbnail || 'https://cdn.discordapp.com/attachments/1236634193019277322/1248996386532233248/mikogif.gif?ex=6665b207&is=66646087&hm=e3373b433b6a9ca9b814592f175c4ebfd82c6e10d63348289675a8cba6d04c2c&',
       image: 'https://cdn.discordapp.com/attachments/1236634193019277322/1256240007169970258/NOW_WITH_MONA.gif?ex=66800c2d&is=667ebaad&hm=99aa0bd08020875ff5e204b6be7de9a2bdfda34b1a46f085cbcf1649a0b29708&',
       

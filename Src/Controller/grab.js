@@ -4,8 +4,7 @@ const Button = require('../Structures/Button')
 
 module.exports = class PlayerGrab extends Button {
    constructor(client) {
-      super(client)
-      this.name = 'playerGrab'
+      super(client, 'playerGrab')
    }
 
    async run(interaction, queue) {

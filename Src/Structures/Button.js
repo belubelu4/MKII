@@ -1,6 +1,7 @@
 module.exports = class Button {
-   constructor(client) {
+   constructor(client, name) {
       this.client = client
+      this.name = name
       this.isAdmin = false
    }
 

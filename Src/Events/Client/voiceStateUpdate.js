@@ -11,7 +11,7 @@ module.exports = class VoiceStateUpdate extends Event {
          if (this.config.autoJoin) autoJoin(this.client, oldState, newState)
 
          updateDescription(this.client, oldState, newState)
-         unDeaf(this.player.getQueue(newState.guild.id))
+         if(isMainGuild(newState.guild.id, this.config.guild.id)) unDeaf(this.player.getQueue(newState.guild.id))
       } catch (error) {
          console.log(`❌ ✦ [At ${__filename}]`, error)
       }

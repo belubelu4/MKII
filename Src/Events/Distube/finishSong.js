@@ -6,7 +6,6 @@ module.exports = class FinishSong extends Event {
    }
 
    async run(queue) {
-      if (queue.listener) await queue.listener.stop()
       if (queue.playerMessage) await queue.playerMessage.delete().catch(() => {})
    }
 }

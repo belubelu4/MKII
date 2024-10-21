@@ -3,8 +3,7 @@ const Button = require('../Structures/Button')
 
 module.exports = class PlayerAdd extends Button {
    constructor(client) {
-      super(client)
-      this.name = 'playerAdd'
+      super(client, 'playerAdd')
    }
 
    async run(interaction) {
