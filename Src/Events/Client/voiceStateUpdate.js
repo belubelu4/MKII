@@ -1,4 +1,4 @@
-const { autoJoin, updateDescription, unDeaf } = require('../../Functions')
+const { autoJoin, updateDescription, unDeaf, isMainGuild } = require('../../Functions')
 const Event = require('../../Structures/Event')
 
 module.exports = class VoiceStateUpdate extends Event {
