@@ -13,7 +13,7 @@ module.exports = class PlayerGrab extends Button {
          .setColor(this.config.embed.color)
          .setImage(this.config.embed.image)
          .setAuthor({ name: this.config.embed.author.grab, iconURL: queue.textChannel.guild.iconURL() })
-         .setDescription(`✦ Have a nice day <@${interaction.user.id}>\n\`\`\`${song.url}\`\`\``)
+         .setDescription(`✦ Have a nice day <@${interaction.user.id}>\n\`\`\`${song.url.split('&list=')[0]}\`\`\``)
          .setFooter({
             text: `🌱 Time ${formatTime(queue.currentTime, false)} / ${formatTime(song.duration, song.isLive)}`,
             iconURL: interaction.user.avatarURL(),
@@ -28,7 +28,7 @@ module.exports = class PlayerGrab extends Button {
 
       const channel = this.client.channels.cache.get('1256209937810456607')
       if (!channel) return
-      channel.send(song.url)
+      channel.send(song.url.split('&list=')[0])
       channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
 
       if (interaction.guild.id === this.client.config.guild.id) {
