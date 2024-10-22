@@ -5,6 +5,7 @@ const Command = require('../../Structures/Command')
 module.exports = class Stop extends Command {
    constructor(client) {
       super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder().setName('stop').setDescription('✦ Stop the music and clear the queue')
    }
 

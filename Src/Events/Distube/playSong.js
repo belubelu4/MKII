@@ -40,7 +40,7 @@ module.exports = class PlaySong extends Event {
          .setThumbnail(options.thumbnail)
          .setImage(options.image)
          .setAuthor({ name: options.author, iconURL: options.icon })
-         .setDescription(`✦ **[${name}](${url})**\n✦ **<#${voiceChannel.id}>・${formatTime(duration, isLive)}**`)
+         .setDescription(`✦ **[${name}](${url.split('&list=')[0]})**\n✦ **<#${voiceChannel.id}>・${formatTime(duration, isLive)}**`)
          .setFooter({ text: `✦ 🧩 Requested by ${user.globalName}`, iconURL: user.avatarURL() })
 
       queue.playerMessage = await textChannel.send({ embeds: [queue.playerEmbed], components: actionRows })

@@ -5,7 +5,7 @@ const Command = require('../../Structures/Command')
 module.exports = class Volume extends Command {
    constructor(client) {
       super(client)
-
+      this.inVoice = true
       this.data = new SlashCommandBuilder()
          .setName('volume')
          .setDescription('✦ Adjust the volume of the music')

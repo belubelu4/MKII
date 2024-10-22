@@ -150,7 +150,7 @@ function getAddSongEmbed(client, song) {
    return new EmbedBuilder()
       .setColor(client.config.embed.color)
       .setThumbnail(song.thumbnail)
-      .setDescription(`✦ Added [${song.name}](${song.url})\n✦ From ${capFirstChar(song.source)}・Requested by <@${song.user.id}>`)
+      .setDescription(`✦ Added [${song.name}](${song.url.split('&list=')[0]})\n✦ From ${capFirstChar(song.source)}・Requested by <@${song.user.id}>`)
 }
 function getAddListEmbed(client, list) {
    return new EmbedBuilder()
@@ -185,15 +185,14 @@ async function playMusic(interaction, name, position) {
    //}
 }
 async function playSong(interaction, name, position) {
-   await interaction.client.player
-      .play(interaction.member.voice.channel, name, {
-         position,
-         member: interaction.member,
-         textChannel: interaction.channel,
-      })
-      .catch(async (error) => {
-         emitError(__filename, error)
-      })
+   await interaction.client.player.play(interaction.member.voice.channel, name, {
+      position,
+      member: interaction.member,
+      textChannel: interaction.channel,
+   })
+   .catch(async (error) => {
+      emitError(__filename, error)
+   })
 }
 async function getMix(url, api, handler) {
    try {

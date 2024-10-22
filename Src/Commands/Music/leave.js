@@ -4,6 +4,7 @@ const Command = require('../../Structures/Command')
 module.exports = class Leave extends Command {
    constructor(client) {
       super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder().setName('leave').setDescription('✦ Make me leave voice channel')
    }
 

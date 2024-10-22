@@ -5,6 +5,7 @@ const Command = require('../../Structures/Command')
 module.exports = class Remove extends Command {
    constructor(client) {
       super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder()
          .setName('remove')
          .setDescription('✦ Remove songs at a specific position')

@@ -27,7 +27,6 @@ module.exports = class InteractionCreate extends Event {
 
       if (this.client.isEi) {
          this.logInteraction(interaction)
-         // await this.createInvite(interaction)
       }
    }
 

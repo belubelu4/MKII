@@ -5,6 +5,7 @@ const Command = require('../../Structures/Command')
 module.exports = class Seek extends Command {
    constructor(client) {
       super(client)
+      this.inVoice = true
       this.data = new SlashCommandBuilder()
          .setName('seek')
          .setDescription('✦ Jump to the timestamp')
