@@ -16,8 +16,8 @@ module.exports = class PlaySong extends Event {
          youtube: {
             thumbnail,
             image: song.thumbnail,
-            // author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
-            author: author.youtubel,
+            author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
+            // author: author.youtubel,
             icon: icons.youtube,
          },
          spotify: {
