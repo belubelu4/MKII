@@ -17,7 +17,7 @@ module.exports = class Ready extends Event {
       const entry = await this.client.rest.get(Routes.applicationCommands(this.client.user.id))
       const launch = entry.find(item => item.name === 'launch')
 
-      const { guild, global } = this.config.test
+      let { guild, global } = this.config.test
          ? { guild: this.client.interface.flat(), global: [] }
          : { guild: this.client.interface[0], global: this.client.interface[1] }
       
