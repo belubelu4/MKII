@@ -32,7 +32,6 @@ module.exports = class Ready extends Event {
          '✦ おまえはもう死んでる',
          '✦ From Ryo.o With ❤️‍🔥',
          '✦ Musou Isshin ⚡',
-         '✦ Booba Saga 🌻',
          '✦ Hypnotized 🫧',
          '✦ Eternity 🪐',
       ]
@@ -45,7 +44,7 @@ module.exports = class Ready extends Event {
                { type: 4, name: `✦ Watching ${client.guilds.cache.size} Servers 🥯` },
             ],
          })
-      }, 24000)
+      }, 60000)
    }
 
    initGreeting(client) {
@@ -63,7 +62,7 @@ module.exports = class Ready extends Event {
          new ActionRowBuilder().addComponents(
             new ButtonBuilder({ label: 'Vote For Me', style: 5 }).setURL(client.config.invite.vote).setDisabled(!client.isEi),
             new ButtonBuilder({ label: 'Invite Me', style: 5 }).setURL(client.config.invite.url).setDisabled(!client.isEi),
-            new ButtonBuilder({ label: 'Join Server', style: 5 }).setURL(client.config.invite.guild)
+            new ButtonBuilder({ label: 'Join Server', style: 5 }).setURL(client.config.invite.guild),
          ),
       ]
    }

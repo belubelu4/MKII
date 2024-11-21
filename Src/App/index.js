@@ -12,6 +12,7 @@ class MeowApp extends Client {
       super({
          intents: [
             GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMembers,
             GatewayIntentBits.GuildMessages,
             GatewayIntentBits.GuildVoiceStates,
             // GatewayIntentBits.MessageContent
@@ -25,25 +26,15 @@ class MeowApp extends Client {
       this.chats = new Collection()
       this.interface = [[], []]
       
-      this.init()
-   }
-
-   async init() {
-      try {
-         Promise.all([
-            this.loadEvents(__dirname + '/../Events/Client'),
-            this.loadEvents(__dirname + '/../Events/Distube'),
-            this.loadCommands(__dirname + '/../Commands/Admin'),
-            this.loadCommands(__dirname + '/../Commands/Music'),
-            this.loadChats(__dirname + '/../Chats'),
-            this.loadButtons(__dirname + '/../Controller'),
-         ])
-      } catch (error) {
-         console.log(error)
-      }
-
-      this.login(this.config.token).catch(() => this.login(this.config.token))
+      this.loadEvents(__dirname + '/../Events/Client')
+      this.loadEvents(__dirname + '/../Events/Distube')
+      this.loadCommands(__dirname + '/../Commands/Admin')
+      this.loadCommands(__dirname + '/../Commands/Music')
+      this.loadChats(__dirname + '/../Chats')
+      this.loadButtons(__dirname + '/../Controller')
+      
       this.arise()
+      this.login(this.config.token).catch(() => this.login(this.config.token))
    }
 
    arise() {
@@ -55,12 +46,11 @@ class MeowApp extends Client {
 
    async loadModules(path, callback) {
       const files = await promises.readdir(path)
-      await Promise.all(
-         files.map(async (file) => {
-            const Module = require(`${path}/${file}`)
-            await callback(new Module(this))
-         })
-      )
+
+      files.map(async (file) => {
+         const Module = require(`${path}/${file}`)
+         await callback(new Module(this))
+      })
    }
 
    async loadEvents(path) {

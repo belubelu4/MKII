@@ -10,6 +10,8 @@ module.exports = class Filter extends Command {
    }
 
    async run(interaction, embed) {
+      return this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ This command is being maintained ><')] }), 10000)
+
       const queue = this.player.getQueue(interaction.guild.id)
 
       try {
