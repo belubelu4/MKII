@@ -12,7 +12,6 @@ class MeowApp extends Client {
       super({
          intents: [
             GatewayIntentBits.Guilds,
-
             GatewayIntentBits.GuildMessages,
             GatewayIntentBits.GuildVoiceStates,
             // GatewayIntentBits.GuildMembers,

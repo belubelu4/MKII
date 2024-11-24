@@ -25,23 +25,6 @@ module.exports = class Ready extends Event {
 
       // await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.client.config.guild.id), { body: guild })
       // await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: global })
-
-      this.client.actionRows = [
-         new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ custom_id: 'playerShuf', style: 2, emoji: this.config.buttons.shuf }),
-            new ButtonBuilder({ custom_id: 'playerPrev', style: 2, emoji: this.config.buttons.prev }),
-            new ButtonBuilder({ custom_id: 'playerStop', style: 4, emoji: this.config.buttons.stop }),
-            new ButtonBuilder({ custom_id: 'playerSkip', style: 2, emoji: this.config.buttons.skip }),
-            new ButtonBuilder({ custom_id: 'playerLoop', style: 2, emoji: this.config.buttons.loop })
-         ),
-         new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ custom_id: 'playerQueue', style: 2, emoji: this.config.buttons.queue }),
-            new ButtonBuilder({ custom_id: 'playerAdd', style: 2, emoji: this.config.buttons.add }),
-            new ButtonBuilder({ custom_id: 'playerPause', style: 2, emoji: this.config.buttons.pause }),
-            new ButtonBuilder({ custom_id: 'playerGrab', style: 2, emoji: this.config.buttons.grab }),
-            new ButtonBuilder({ custom_id: 'playerClear', style: 2, emoji: this.config.buttons.clear })
-         ),
-      ]
    }
 
    setPresence(client) {

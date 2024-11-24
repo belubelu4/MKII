@@ -7,7 +7,7 @@ module.exports = class PlayerAdd extends Button {
    }
 
    async run(interaction) {
-      await this.showModal(interaction, 'playerAddModal', 'Add Music ><', 'playerAddInput', '✦ Name', 'Enter music name or link')
+      await this.showModal(interaction, 'playerAddModal', '✦ Add Music', 'playerAddInput', '✦ Name', 'Enter name or link')
    }
 
    async showModal(interaction, customId, title, inputId, label, placeholder) {
