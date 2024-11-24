@@ -12,9 +12,10 @@ class MeowApp extends Client {
       super({
          intents: [
             GatewayIntentBits.Guilds,
-            // GatewayIntentBits.GuildMembers,
+
             GatewayIntentBits.GuildMessages,
             GatewayIntentBits.GuildVoiceStates,
+            // GatewayIntentBits.GuildMembers,
             // GatewayIntentBits.MessageContent
          ],
       })
@@ -23,14 +24,14 @@ class MeowApp extends Client {
       this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(cookies), new SpotifyPlugin(), new SoundCloudPlugin()] })
       this.commands = new Collection()
       this.buttons = new Collection()
-      this.chats = new Collection()
+      // this.chats = new Collection()
       this.interface = [[], []]
       
       this.loadEvents(__dirname + '/../Events/Client')
       this.loadEvents(__dirname + '/../Events/Distube')
       this.loadCommands(__dirname + '/../Commands/Admin')
       this.loadCommands(__dirname + '/../Commands/Music')
-      this.loadChats(__dirname + '/../Chats')
+      // this.loadChats(__dirname + '/../Chats')
       this.loadButtons(__dirname + '/../Controller')
       
       this.arise()

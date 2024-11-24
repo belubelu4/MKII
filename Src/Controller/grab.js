@@ -20,18 +20,19 @@ module.exports = class PlayerGrab extends Button {
          })
          .setTimestamp()
 
-      this.removeMessage(await queue.textChannel.send({ embeds: [grabEmbed] }), 40000)
+      await queue.textChannel.send({ embeds: [grabEmbed] })
+
       queue.playerEmbed.setFooter({
          text: `✦ 🥝 Song revealed by ${interaction.user.globalName}`,
          iconURL: interaction.user.avatarURL(),
       })
 
-      const channel = this.client.channels.cache.get('1256209937810456607')
-      if (!channel) return
-      channel.send(song.url.split('&list=')[0])
-      channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
-
       if (interaction.guild.id === this.client.config.guild.id) {
+         const channel = this.client.channels.cache.get('1256209937810456607')
+         if (!channel) return
+         channel.send(song.url.split('&list=')[0])
+         channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
+
          queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
       }
    }

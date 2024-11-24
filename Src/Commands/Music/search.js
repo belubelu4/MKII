@@ -48,7 +48,7 @@ module.exports = class Search extends Command {
          const rows = []
          for (let i = 0; i < buttons.length; i += 5) rows.push(new ActionRowBuilder().addComponents(buttons.slice(i, i + 5)))
 
-         rows.push(new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('Close').setStyle(4).setCustomId('searchClose')))
+         rows.push(new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('✦ Close').setStyle(4).setCustomId('searchClose')))
 
          const message = await interaction.editReply({ embeds: [embed], components: rows })
          const filter = (i) => i.user.id === interaction.user.id
