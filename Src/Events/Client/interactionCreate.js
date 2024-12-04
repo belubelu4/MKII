@@ -25,9 +25,7 @@ module.exports = class InteractionCreate extends Event {
       else if (interaction.isModalSubmit()) await this.processModalSubmit(interaction, embed)
       else if (interaction.isButton()) await this.processButton(interaction)
 
-      if (this.client.isEi) {
-         this.logInteraction(interaction)
-      }
+      if (this.client.isEi) this.logInteraction(interaction)
    }
 
    isMainGuild(interaction) {

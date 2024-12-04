@@ -8,5 +8,7 @@ module.exports = class AddSong extends Event {
 
    async run(queue, song) {
       queue.textChannel.send({ embeds: [getAddSongEmbed(this.client, song)] }).catch(() => {})
+
+      console.log(song.source)
    }
 }
