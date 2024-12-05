@@ -7,7 +7,7 @@ const { promises } = require('fs')
 const config = require('../config')
 
 class MeowApp extends Client {
-   constructor(config, cookies) {
+   constructor(config) {
       super({
          intents: [
             GatewayIntentBits.Guilds,
@@ -82,4 +82,4 @@ class MeowApp extends Client {
    }
 }
 
-module.exports = new MeowApp(config, cookies)
+module.exports = new MeowApp(config)
