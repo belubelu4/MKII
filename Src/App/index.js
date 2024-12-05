@@ -4,7 +4,6 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
 const { promises } = require('fs')
-const cookies = require('../cookies')
 const config = require('../config')
 
 class MeowApp extends Client {
@@ -20,7 +19,7 @@ class MeowApp extends Client {
       })
 
       this.config = config
-      this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(cookies), new SpotifyPlugin(), new SoundCloudPlugin()] })
+      this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(this.config.cookies), new SpotifyPlugin(), new SoundCloudPlugin()] })
       this.commands = new Collection()
       this.buttons = new Collection()
       // this.chats = new Collection()
