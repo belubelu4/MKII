@@ -19,7 +19,7 @@ class MeowApp extends Client {
       })
 
       this.config = config
-      this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(this.config.cookies), new SpotifyPlugin(), new SoundCloudPlugin()] })
+      this.player = new DisTube(this, { nsfw: true, plugins: [new YouTubePlugin(), new SpotifyPlugin(), new SoundCloudPlugin()] })
       this.commands = new Collection()
       this.buttons = new Collection()
       // this.chats = new Collection()
