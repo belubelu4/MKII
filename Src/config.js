@@ -8,7 +8,6 @@ module.exports = {
    maintain: false,
    shard: Boolean(process.env.shard),
    test: Boolean(process.env.test),
-   cookies: JSON.parse(process.env.cookies),
 
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },
