@@ -4,7 +4,7 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
 const { promises } = require('fs')
-const config = require('../config')
+const config = require('./config')
 
 class MeowApp extends Client {
    constructor(config) {
