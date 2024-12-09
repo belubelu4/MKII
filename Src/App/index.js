@@ -37,7 +37,7 @@ class MeowApp extends Client {
    }
 
    arise() {
-      require('express')().get('/', (req, res) => res.send('🪐')).listen(4000)
+      require('express')().get('/', (req, res) => res.writeHead(200).end()).listen(5000)
 
       process.env.YTDL_NO_UPDATE = true
       process.env.YTSR_NO_UPDATE = true
