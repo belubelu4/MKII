@@ -37,8 +37,6 @@ module.exports = class Filter extends Command {
          const filter = (i) => i.user.id === interaction.user.id
          const collector = message.createMessageComponentCollector({ filter, time: 120000 })
 
-         console.log(queue.filters)
-
          collector.on('collect', async (button) => {
             await button.deferUpdate()
             const { customId } = button
