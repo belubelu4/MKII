@@ -7,9 +7,7 @@ module.exports = class Test extends Command {
       super(client)
       this.isAdmin = true
       this.inVoice = true
-      this.data = new SlashCommandBuilder()
-         .setName('test')
-         .setDescription('✦ Ola Ola')
+      this.data = new SlashCommandBuilder().setName('test').setDescription('✦ Play ID22424')
    }
 
    async run(interaction, embed) {

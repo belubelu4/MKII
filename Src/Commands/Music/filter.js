@@ -10,8 +10,6 @@ module.exports = class Filter extends Command {
    }
 
    async run(interaction, embed) {
-      return this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ This command is being maintained ><')] }), 10000)
-
       const queue = this.player.getQueue(interaction.guild.id)
 
       try {
@@ -38,6 +36,8 @@ module.exports = class Filter extends Command {
          const message = await interaction.editReply({ embeds: [embed], components: [row] })
          const filter = (i) => i.user.id === interaction.user.id
          const collector = message.createMessageComponentCollector({ filter, time: 120000 })
+
+         console.log(queue.filters)
 
          collector.on('collect', async (button) => {
             await button.deferUpdate()

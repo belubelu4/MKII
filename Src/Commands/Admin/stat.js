@@ -5,9 +5,7 @@ module.exports = class Stat extends Command {
    constructor(client) {
       super(client)
       this.isAdmin = true
-      this.data = new SlashCommandBuilder()
-         .setName('stat')
-         .setDescription('✦ Show bot statistics')
+      this.data = new SlashCommandBuilder().setName('stat').setDescription('✦ Show bot statistics')
    }
 
    async run(interaction, embed) {

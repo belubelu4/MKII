@@ -8,8 +8,8 @@ module.exports = class Seek extends Command {
       this.inVoice = true
       this.data = new SlashCommandBuilder()
          .setName('seek')
-         .setDescription('✦ Jump to the timestamp')
-         .addStringOption((option) => option.setName('time').setDescription('✦ Example: 2h 30m 2s').setRequired(true))
+         .setDescription('✦ Change the current time')
+         .addStringOption((option) => option.setName('time').setDescription('✦ Example: 5s / 1m 3s / 2h 30m 5s /').setRequired(true))
          .addStringOption((option) =>
             option
                .setName('type')
@@ -38,8 +38,8 @@ module.exports = class Seek extends Command {
                position = Math.max(queue.currentTime - position, 0)
             }
 
-            await queue.seek(position)
-            embed.setDescription(`✦ Seeked to ${formatTime(queue.currentTime, false)}`)
+            queue.seek(position)
+            embed.setDescription(`✦ Seeked to ${formatTime(position, false)}`)
          }
 
          this.removeMessage(await interaction.editReply({ embeds: [embed] }), 5000)

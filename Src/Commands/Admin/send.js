@@ -22,7 +22,7 @@ module.exports = class Send extends Command {
       const query = interaction.options.getFocused()
       const filtered = choices.filter((choice) => choice.name.includes(query))
       const response = filtered.map((choice) => ({ name: choice.name, value: choice.value }))
-      
+
       await interaction.respond(response)
    }
 

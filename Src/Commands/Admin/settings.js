@@ -68,13 +68,11 @@ module.exports = class Settings extends Command {
             this.removeMessage(await interaction.editReply({ embeds: [embed.setDescription('✦ Settings updated successfully')] }), 10000)
          } else if (subcommand === 'view') {
             embed.setAuthor({ name: this.config.embed.author.settings, iconURL: interaction.guild.iconURL() }).addFields(
-               { name: '✦ Admin ID', value: this.config.admin.id || 'Not set', inline: true },
                { name: '✦ Strict Mode', value: this.config.strict ? 'Enabled' : 'Disabled', inline: true },
                { name: '✦ Maintain Mode', value: this.config.maintain ? 'Enabled' : 'Disabled', inline: true },
                { name: '✦ Auto Join', value: this.config.autoJoin ? 'Enabled' : 'Disabled', inline: true },
 
-               { name: '✦ API', value: this.config.api || 'Not set', inline: false },
-
+               { name: '✦ Admin ID', value: this.config.admin.id || 'Not set', inline: true },
                { name: '✦ DJ Role', value: this.config.users.roles.join(', ') || 'Not set', inline: true },
                { name: '✦ Embed Color', value: this.config.embed.color || 'Not set', inline: true },
                { name: '✦ Embed Thumbnail', value: this.config.embed.thumbnail || 'Not set', inline: true },
