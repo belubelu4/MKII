@@ -4,7 +4,8 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
 const fs = require('fs/promises')
-const ffmpeg = require('ffmpeg-static')
+// const ffmpeg = require('ffmpeg-static')
+const ffmpeg = require('@ffmpeg-installer/ffmpeg').path
 const config = require('./config')
 
 class MeowApp extends Client {
