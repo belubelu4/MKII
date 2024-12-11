@@ -27,7 +27,7 @@ module.exports = class Filter extends Command {
          const buttons = ['3d', 'haas', 'vaporwave', 'nightcore'].map((id) =>
             new ButtonBuilder()
                .setCustomId(id)
-               .setLabel(id.charAt(0).toUpperCase() + id.slice(1))
+               .setLabel('✦' + id.charAt(0).toUpperCase() + id.slice(1))
                .setStyle(2)
          )
          buttons.push(new ButtonBuilder().setCustomId('filterClose').setLabel('Close').setStyle(4))
