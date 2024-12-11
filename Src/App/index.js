@@ -23,7 +23,7 @@ class MeowApp extends Client {
       this.config = config
       this.player = new DisTube(this, {
          nsfw: true,
-         ffmpeg: { path: ffmpeg },
+         // ffmpeg: { path: ffmpeg },
          plugins: [new YouTubePlugin({ cookies: this.config.cookies }), new SpotifyPlugin(), new SoundCloudPlugin()],
       })
 
