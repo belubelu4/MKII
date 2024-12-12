@@ -3,8 +3,8 @@ const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
-const fs = require('fs/promises')
-const ffmpeg = require('ffmpeg-static')
+const fs = require('fs/promises') 
+// const ffmpeg = require('ffmpeg-static')   // "ffmpeg-static": "^5.2.0",
 const config = require('./config')
 
 class MeowApp extends Client {
@@ -22,7 +22,7 @@ class MeowApp extends Client {
       this.config = config
       this.player = new DisTube(this, {
          nsfw: true,
-         ffmpeg: { path: ffmpeg },
+         // ffmpeg: { path: ffmpeg },
          plugins: [new YouTubePlugin({ cookies: this.config.cookies }), new SpotifyPlugin(), new SoundCloudPlugin()],
       })
 
