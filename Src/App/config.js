@@ -6,14 +6,12 @@ module.exports = {
    autoJoin: false,
    strict: false,
    maintain: false,
-   shard: Boolean(process.env.shard),
-   test: Boolean(process.env.test),
    cookies: JSON.parse(process.env.cookies),
 
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },
-   admin: { id: process.env.admin || '' },
-   users: { roles: ['753284454952337589'] },
+   admin: { id: '' },
+   users: { roles: '753284454952337589' },
 
    embed: {
       color: '2B2D31',
