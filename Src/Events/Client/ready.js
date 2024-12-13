@@ -37,7 +37,7 @@ module.exports = class Ready extends Event {
       ]
 
       setInterval(() => {
-         client.user.setPresence({
+         this.client.user.setPresence({
             status: Math.random() < 0.4 ? 'online' : 'idle',
             activities: states.map(state => ({ type: 4, name: state })),
          })
