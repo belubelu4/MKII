@@ -11,8 +11,8 @@ module.exports = class Ready extends Event {
       console.log('✔️    ✦ 🧩 Logged in as -- ' + this.client.user.username)
 
       this.client.isEi = this.client.user.username === 'Raiden Shogun'
-      this.setPresence(this.client)
-      this.initGreeting(this.client)
+      this.setPresence()
+      this.initGreeting()
 
       const entry = await this.client.rest.get(Routes.applicationCommands(this.client.user.id))
       const launch = entry.find(item => item.name === 'launch')
@@ -22,46 +22,42 @@ module.exports = class Ready extends Event {
       
       if (launch) global = [...global, launch]
 
-      await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.client.config.guild.id), { body: guild })
+      await this.client.rest.put(Routes.applicationGuildCommands(this.client.user.id, this.config.guild.id), { body: guild })
       await this.client.rest.put(Routes.applicationCommands(this.client.user.id), { body: global })
    }
 
-   setPresence(client) {
+   setPresence() {
       const states = [
-         '✦ おまえはもう死んでる',
          '✦ From Ryo.o With ❤️‍🔥',
          '✦ Musou Isshin ⚡',
+         '✦ Mlem Dango 🍡',
+         '✦ Booba Saga 🌻',
          '✦ Hypnotized 🫧',
          '✦ Eternity 🪐',
       ]
 
-      setInterval(() => {
-         client.user.setPresence({
-            status: Math.random() < 0.4 ? 'online' : 'idle',
-            activities: [
-               { type: 4, name: states[Math.floor(Math.random() * states.length)] },
-               { type: 4, name: `✦ Watching ${client.guilds.cache.size} Servers 🥯` },
-            ],
-         })
-      }, 60000)
+      this.client.user.setPresence({
+         status: 'online',
+         activities: states.map(state => ({ type: 4, name: state })),
+      })      
    }
 
-   initGreeting(client) {
-      client.greeting = [
+   initGreeting() {
+      this.client.greeting = [
          new EmbedBuilder()
-            .setColor(client.config.embed.color)
-            .setThumbnail(client.config.embed.thumbnail)
+            .setColor(this.config.embed.color)
+            .setThumbnail(this.config.embed.thumbnail)
             .setDescription(
                '✦ Wish you a happy music time, moah moah\n' +
                   '✦ Click buttons below for more info\n' +
                   '✦ From Pooba Saga with luv\n' +
-                  '✦ ' + client.user.username + ' :3'
+                  '✦ ' + this.client.user.username + ' :3'
             ),
 
          new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ label: '✦ Vote For Me', style: 5 }).setURL(client.config.invite.vote).setDisabled(!client.isEi),
-            new ButtonBuilder({ label: '✦ Invite Me', style: 5 }).setURL(client.config.invite.url).setDisabled(!client.isEi),
-            new ButtonBuilder({ label: '✦ Support Server', style: 5 }).setURL(client.config.invite.guild),
+            new ButtonBuilder({ label: '✦ Vote For Me', style: 5 }).setURL(this.config.invite.vote).setDisabled(!this.client.isEi),
+            new ButtonBuilder({ label: '✦ Invite Me', style: 5 }).setURL(this.config.invite.url).setDisabled(!this.client.isEi),
+            new ButtonBuilder({ label: '✦ Support Server', style: 5 }).setURL(this.config.invite.guild),
          ),
       ]
    }

@@ -3,9 +3,9 @@ const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
 const { DisTube } = require('distube')
-const fs = require('fs/promises') 
-// const ffmpeg = require('ffmpeg-static')   // "ffmpeg-static": "^5.2.0",
+const fs = require('fs/promises')
 const config = require('./config')
+// const ffmpeg = require('ffmpeg-static')   // "ffmpeg-static": "^5.2.0",
 
 class MeowApp extends Client {
    constructor(config) {
@@ -31,20 +31,16 @@ class MeowApp extends Client {
       // this.chats = new Collection()
       this.interface = [[], []]
 
-      this.loadEvents(__dirname + '/../Events/Client')
-      this.loadEvents(__dirname + '/../Events/Distube')
-      this.loadCommands(__dirname + '/../Commands/Admin')
-      this.loadCommands(__dirname + '/../Commands/Music')
-      // this.loadChats(__dirname + '/../Chats')
-      this.loadButtons(__dirname + '/../Controller')
+      this.loadModules(__dirname + '/../Events/Client', this.loadEvents.bind(this, this))
+      this.loadModules(__dirname + '/../Events/Distube', this.loadEvents.bind(this, this.player))
+      this.loadModules(__dirname + '/../Commands/Admin', this.loadCommands.bind(this, 0))
+      this.loadModules(__dirname + '/../Commands/Music', this.loadCommands.bind(this, 1))
+      // this.loadModules(__dirname + '/../Chats', this.loadChats.bind(this))
+      this.loadModules(__dirname + '/../Controller', this.loadButtons.bind(this))
 
-      this.arise()
       this.login(this.config.token).catch(() => this.login(this.config.token))
-   }
 
-   arise() {
       require('express')().get('/', (req, res) => res.writeHead(200).end()).listen(4000)
-
       process.env.YTDL_NO_UPDATE = true
       process.env.YTSR_NO_UPDATE = true
    }
@@ -58,33 +54,21 @@ class MeowApp extends Client {
       })
    }
 
-   async loadEvents(path) {
-      const emitter = path.includes('Client') ? this : this.player
-
-      await this.loadModules(path, async (event) => {
-         emitter.on(event.name, event.execute.bind(event))
-      })
+   async loadEvents(emitter, event) {
+      emitter.on(event.name, event.execute.bind(event))
    }
 
-   async loadCommands(path) {
-      const i = path.includes('Admin') ? 0 : 1
-
-      await this.loadModules(path, async (command) => {
-         this.interface[i].push(command.data)
-         this.commands.set(command.data.name, command)
-      })
+   async loadCommands(index, command) {
+      this.interface[index].push(command.data)
+      this.commands.set(command.data.name, command)
    }
 
-   async loadChats(path) {
-      await this.loadModules(path, async (chat) => {
-         this.chats.set(chat.data.name, chat)
-      })
+   async loadChats(chat) {
+      this.chats.set(chat.data.name, chat)
    }
 
-   async loadButtons(path) {
-      await this.loadModules(path, async (button) => {
-         this.buttons.set(button.name, button)
-      })
+   async loadButtons(button) {
+      this.buttons.set(button.name, button)
    }
 }
 
