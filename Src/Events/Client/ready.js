@@ -39,7 +39,7 @@ module.exports = class Ready extends Event {
       setInterval(() => {
          this.client.user.setPresence({
             status: Math.random() < 0.4 ? 'online' : 'idle',
-            activities: states.map(state => ({ type: 4, name: state })),
+            activities: [{ type: 4, name: states[Math.floor(Math.random() * states.length)] }],
          })
       }, 60000)
    }
