@@ -36,10 +36,12 @@ module.exports = class Ready extends Event {
          '✦ Eternity 🪐',
       ]
 
-      this.client.user.setPresence({
-         status: 'online',
-         activities: states.map(state => ({ type: 4, name: state })),
-      })      
+      setInterval(() => {
+         client.user.setPresence({
+            status: Math.random() < 0.4 ? 'online' : 'idle',
+            activities: states.map(state => ({ type: 4, name: state })),
+         })
+      }, 60000)
    }
 
    initGreeting() {
