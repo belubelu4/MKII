@@ -15,8 +15,7 @@ module.exports = class Stat extends Command {
          .setDescription(
             `**
             ✦ Command Count: \`${this.client.commands.map((c) => c.name).length}\`
-            ✦ Guild Count: \`${this.client.guilds.cache.size || 0}\`
-            ✦ Shard Count: \`${this.client.shard.count || 0}\`
+            ✦ Guild Count: \`${this.client.guilds.cache.size}\`
             ✦ Connected Voice: \`${this.client.voice.adapters.size}\`
             ✦ Operation Time: <t:${Math.floor(Number(Date.now() - this.client.uptime) / 1000)}:R>
             ✦ Ping: \`${this.client.ws.ping} MS\`
