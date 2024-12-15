@@ -14,7 +14,6 @@ module.exports = class Stat extends Command {
          .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true, size: 1024 }))
          .setDescription(
             `**
-            ✦ Command Count: \`${this.client.commands.map((c) => c.name).length}\`
             ✦ Guild Count: \`${this.client.guilds.cache.size}\`
             ✦ Connected Voice: \`${this.client.voice.adapters.size}\`
             ✦ Operation Time: <t:${Math.floor(Number(Date.now() - this.client.uptime) / 1000)}:R>
