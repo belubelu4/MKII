@@ -20,7 +20,7 @@ module.exports = class PlayerGrab extends Button {
          })
          .setTimestamp()
 
-      await queue.textChannel.send({ embeds: [grabEmbed] })
+      const grabMessage = await queue.textChannel.send({ embeds: [grabEmbed] })
 
       queue.playerEmbed.setFooter({
          text: `✦ 🥝 Song revealed by ${interaction.user.globalName}`,
@@ -28,6 +28,8 @@ module.exports = class PlayerGrab extends Button {
       })
 
       if (interaction.guild.id === this.client.config.guild.id) {
+         this.removeMessage(grabMessage, 5000)
+
          const channel = this.client.channels.cache.get('1256209937810456607')
          if (!channel) return
          channel.send(song.url.split('&list=')[0])
