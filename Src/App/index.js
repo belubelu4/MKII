@@ -45,12 +45,10 @@ class MeowApp extends Client {
 
    async loadModules(path, callback) {
       const files = await fs.readdir(path)
-   
+
       for (const file of files) {
          const Module = require(`${path}/${file}`)
          callback(new Module(this))
-
-         delete require.cache[require.resolve(`${path}/${file}`)]
       }
    }
 
@@ -63,9 +61,9 @@ class MeowApp extends Client {
       this.commands.set(command.data.name, command)
    }
 
-   loadChats(chat) {
-      this.chats.set(chat.data.name, chat)
-   }
+   // loadChats(chat) {
+   //    this.chats.set(chat.data.name, chat)
+   // }
 
    loadButtons(button) {
       this.buttons.set(button.name, button)

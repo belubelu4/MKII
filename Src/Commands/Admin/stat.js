@@ -10,13 +10,14 @@ module.exports = class Stat extends Command {
 
    async run(interaction, embed) {
       embed.setDescription(
-         `**✦ Guild Count: \`${this.client.guilds.cache.size}\`
-         ✦ Connected Voice: \`${this.client.voice.adapters.size}\`
-         ✦ Operation Time: <t:${Math.floor(Number(Date.now() - this.client.uptime) / 1000)}:R>
+         `**✦ Guild: \`${this.client.guilds.cache.size}\`
+         ✦ Voice: \`${this.client.voice.adapters.size}\`
+         ✦ Up Time: <t:${Math.floor(Number(Date.now() - this.client.uptime) / 1000)}:R>
          ✦ Ping: \`${this.client.ws.ping} MS\`
-         ✦ Memory Usage: \`${(process.memoryUsage().rss / 1024 / 1024).toFixed(2)} MB\`**`
+         ✦ Heap: \`${(process.memoryUsage().heapTotal / 1024 / 1024).toFixed(2)} MB\`
+         ✦ Memory: \`${(process.memoryUsage().rss / 1024 / 1024).toFixed(2)} MB\`**`
       )
 
-      this.removeMessage(await interaction.editReply({ embeds: [embed] }), 60000)
+      this.removeMessage(await interaction.editReply({ embeds: [embed] }), 40000)
    }
 }
