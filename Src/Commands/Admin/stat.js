@@ -14,7 +14,7 @@ module.exports = class Stat extends Command {
          ✦ Connected Voice: \`${this.client.voice.adapters.size}\`
          ✦ Operation Time: <t:${Math.floor(Number(Date.now() - this.client.uptime) / 1000)}:R>
          ✦ Ping: \`${this.client.ws.ping} MS\`
-         ✦ Memory Usage: \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB\`**`
+         ✦ Memory Usage: \`${(process.memoryUsage().rss / 1024 / 1024).toFixed(2)} MB\`**`
       )
 
       this.removeMessage(await interaction.editReply({ embeds: [embed] }), 60000)

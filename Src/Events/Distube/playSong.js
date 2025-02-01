@@ -12,34 +12,34 @@ module.exports = class PlaySong extends Event {
       const { name, url, duration, isLive, user, source } = song
       const { actionRows, textChannel, voiceChannel } = queue
 
-      const options = {
-         youtube: {
-            thumbnail,
-            image: song.thumbnail,
-            author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
-            // author: author.youtubel,
-            icon: icons.youtube,
-         },
-         spotify: {
-            thumbnail: song.thumbnail,
-            image: Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance,
-            author: author.spotify,
-            icon: icons.spotify,
-         },
-         soundcloud: {
-            thumbnail: song.thumbnail,
-            image: Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance,
-            author: author.soundcloud,
-            icon: icons.soundcloud,
-         },
-      }[source]
+      const getAuthorInfo = async (source) => {
+         switch (source) {
+            case 'youtube':
+               return {
+                  thumbnail,
+                  image: song.thumbnail,
+                  author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
+               }
+            case 'spotify':
+            case 'soundcloud':
+               return {
+                  thumbnail: song.thumbnail,
+                  image: Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance,
+                  author: author[source],
+               }
+            default:
+               return {}
+         }
+      }
+
+      const options = await getAuthorInfo(source)
 
       queue.playerEmbed = new EmbedBuilder()
          .setColor(color)
          .setTimestamp()
          .setThumbnail(options.thumbnail)
          .setImage(options.image)
-         .setAuthor({ name: options.author, iconURL: options.icon })
+         .setAuthor({ name: options.author, iconURL: icons[source] })
          .setDescription(`✦ **[${name}](${url.split('&list=')[0]})**\n✦ **<#${voiceChannel.id}>・${formatTime(duration, isLive)}**`)
          .setFooter({ text: `✦ 🧩 Requested by ${user.globalName}`, iconURL: user.avatarURL() })
 

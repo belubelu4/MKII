@@ -6,7 +6,7 @@ module.exports = class PlayerShuffle extends Button {
    }
 
    async run(interaction, queue) {
-      for (let i = 0; i<10; i++) queue.shuffle()
+      for (let i = 0; i<3; i++) queue.shuffle()
 
       queue.playerEmbed.setFooter({
          text: `✦ 🌱 Shuffled by ${interaction.user.globalName}`,

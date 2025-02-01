@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js')
+const { Client, GatewayIntentBits } = require('discord.js')
 const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { SpotifyPlugin } = require('@distube/spotify')
 const { YouTubePlugin } = require('@distube/youtube')
@@ -26,48 +26,48 @@ class MeowApp extends Client {
          plugins: [new YouTubePlugin({ cookies: this.config.cookies }), new SpotifyPlugin(), new SoundCloudPlugin()],
       })
 
-      this.commands = new Collection()
-      this.buttons = new Collection()
-      // this.chats = new Collection()
+      this.commands = new Map()
+      this.buttons = new Map()
+      // this.chats = new Map()
       this.interface = [[], []]
 
-      this.loadModules(__dirname + '/../Events/Client', this.loadEvents.bind(this, this))
-      this.loadModules(__dirname + '/../Events/Distube', this.loadEvents.bind(this, this.player))
-      this.loadModules(__dirname + '/../Commands/Admin', this.loadCommands.bind(this, 0))
-      this.loadModules(__dirname + '/../Commands/Music', this.loadCommands.bind(this, 1))
-      // this.loadModules(__dirname + '/../Chats', this.loadChats.bind(this))
-      this.loadModules(__dirname + '/../Controller', this.loadButtons.bind(this))
+      this.loadModules(`${__dirname}/../Events/Client`, (event) => this.loadEvents(this, event)),
+      this.loadModules(`${__dirname}/../Events/Distube`, (event) => this.loadEvents(this.player, event)),
+      this.loadModules(`${__dirname}/../Commands/Admin`, (command) => this.loadCommands(0, command)),
+      this.loadModules(`${__dirname}/../Commands/Music`, (command) => this.loadCommands(1, command)),
+      // this.loadModules(`${__dirname}/../Chats`, (chat) => this.loadChats(chat)),
+      this.loadModules(`${__dirname}/../Controller`, (button) => this.loadButtons(button)),
 
-      this.login(this.config.token).catch(() => this.login(this.config.token))
+      this.login(this.config.token)
 
-      require('express')().get('/', (req, res) => res.writeHead(200).end()).listen(4000)
-      process.env.YTDL_NO_UPDATE = true
-      process.env.YTSR_NO_UPDATE = true
+      require('http').createServer((req, res) => res.end()).listen(4000)
    }
 
    async loadModules(path, callback) {
       const files = await fs.readdir(path)
-
-      files.map(async (file) => {
+   
+      for (const file of files) {
          const Module = require(`${path}/${file}`)
-         await callback(new Module(this))
-      })
+         callback(new Module(this))
+
+         delete require.cache[require.resolve(`${path}/${file}`)]
+      }
    }
 
-   async loadEvents(emitter, event) {
+   loadEvents(emitter, event) {
       emitter.on(event.name, event.execute.bind(event))
    }
 
-   async loadCommands(index, command) {
+   loadCommands(index, command) {
       this.interface[index].push(command.data)
       this.commands.set(command.data.name, command)
    }
 
-   async loadChats(chat) {
+   loadChats(chat) {
       this.chats.set(chat.data.name, chat)
    }
 
-   async loadButtons(button) {
+   loadButtons(button) {
       this.buttons.set(button.name, button)
    }
 }
