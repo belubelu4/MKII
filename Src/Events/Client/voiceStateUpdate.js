@@ -14,8 +14,8 @@ module.exports = class VoiceStateUpdate extends Event {
       if (isMainGuild(newState.guild.id, this.config.guild.id)) {
          unDeaf(this.player.getQueue(newState.guild.id))
       } else {
-         const botChannel = oldState.guild.members.me.voice.channel
-         if (botChannel?.id === oldState.channelId && !botChannel.members.some((member) => !member.user.bot)) {
+         const voiceChanel = oldState.guild.members.me.voice.channel
+         if (voiceChanel?.id === oldState.channelId && !voiceChanel.members.some((member) => !member.user.bot)) {
             setTimeout(() => this.player.voices.leave(oldState.guild.id), 5000)
          }
       }

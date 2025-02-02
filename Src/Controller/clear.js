@@ -2,7 +2,7 @@ const Button = require('../Structures/Button')
 
 module.exports = class PlayerClear extends Button {
    constructor(client) {
-      super(client,  'playerClear')
+      super(client, 'playerClear')
    }
 
    async run(interaction, queue) {

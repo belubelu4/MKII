@@ -27,8 +27,6 @@ module.exports = class PlaySong extends Event {
                   image: Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance,
                   author: author[source],
                }
-            default:
-               return {}
          }
       }
 

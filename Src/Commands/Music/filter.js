@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
-const { description, sendErrorEmbed } = require('../../Functions')
+const { description } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Filter extends Command {
@@ -54,7 +54,6 @@ module.exports = class Filter extends Command {
 
          collector.on('end', () => this.removeMessage(message, 100))
       } catch (error) {
-         sendErrorEmbed(interaction, embed)
          console.error(`❌ ✦ [At ${__filename}]`, error)
       }
    }

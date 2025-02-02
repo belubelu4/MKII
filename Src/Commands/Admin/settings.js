@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { isOwner } = require('../../Functions')
 const Command = require('../../Structures/Command')
 
 module.exports = class Settings extends Command {
@@ -39,9 +38,9 @@ module.exports = class Settings extends Command {
 
       try {
          const settingsOptions = {
-            'admin-id':             (value, interaction) => isOwner(interaction) && (this.config.admin.id = value),
+            'admin-id':             (value) => (this.config.admin.id = value),
             'api':                  (value) => (this.config.api = value),
-            'dj-role':              (value) => (this.config.users.roles = value.split(' ')),
+            'dj-role':              (value) => (this.config.users.roles = value),
             'embed-color':          (value) => (this.config.embed.color = value),
             'embed-thumbnail':      (value) => (this.config.embed.thumbnail = value),
             'embed-image':          (value) => (this.config.embed.image = value),
@@ -73,7 +72,7 @@ module.exports = class Settings extends Command {
                { name: '✦ Auto Join', value: this.config.autoJoin ? 'Enabled' : 'Disabled', inline: true },
 
                { name: '✦ Admin ID', value: this.config.admin.id || 'Not set', inline: true },
-               { name: '✦ DJ Role', value: this.config.users.roles.join(', ') || 'Not set', inline: true },
+               { name: '✦ DJ Role', value: this.config.users.roles || 'Not set', inline: true },
                { name: '✦ Embed Color', value: this.config.embed.color || 'Not set', inline: true },
                { name: '✦ Embed Thumbnail', value: this.config.embed.thumbnail || 'Not set', inline: true },
                

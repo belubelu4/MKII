@@ -10,7 +10,6 @@ module.exports = class Ready extends Event {
       console.log('✔️    ✦ 🪐 From Booba Saga With Luv')
       console.log('✔️    ✦ 🧩 Logged in as -- ' + this.client.user.username)
 
-      this.client.isEi = this.client.user.username === 'Raiden Shogun'
       this.setPresence()
       this.initGreeting()
 
@@ -57,8 +56,8 @@ module.exports = class Ready extends Event {
             ),
 
          new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ label: '✦ Vote For Me', style: 5 }).setURL(this.config.invite.vote).setDisabled(!this.client.isEi),
-            new ButtonBuilder({ label: '✦ Invite Me', style: 5 }).setURL(this.config.invite.url).setDisabled(!this.client.isEi),
+            new ButtonBuilder({ label: '✦ Vote For Me', style: 5 }).setURL(this.config.invite.vote),
+            new ButtonBuilder({ label: '✦ Invite Me', style: 5 }).setURL(this.config.invite.url),
             new ButtonBuilder({ label: '✦ Support Server', style: 5 }).setURL(this.config.invite.guild),
          ),
       ]

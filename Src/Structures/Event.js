@@ -12,10 +12,6 @@ module.exports = class Event {
       return this.client.commands
    }
 
-   get chats() {
-      return this.client.chats
-   }
-
    get buttons() {
       return this.client.buttons
    }
