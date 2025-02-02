@@ -10,6 +10,7 @@ module.exports = class Ready extends Event {
       console.log('✔️    ✦ 🪐 From Booba Saga With Luv')
       console.log('✔️    ✦ 🧩 Logged in as -- ' + this.client.user.username)
 
+      this.client.isEi = this.client.user.username === 'Raiden Shogun'
       this.setPresence()
       this.initGreeting()
 
