@@ -16,7 +16,7 @@ module.exports = class Leave extends Command {
             this.player.voices.leave(interaction.guildId)
             embed.setDescription('✦ Have a nice day :3')
          } else {
-            embed.setDescription('✦ I am not in a voice channel')
+            embed.setDescription('✦ Just leave me there')
          }
 
          const reply = await interaction.editReply({ embeds: [embed] })

@@ -5,7 +5,7 @@
       "@distube/soundcloud": "^2.0.4",
       "@distube/spotify": "^2.0.2",
       "@distube/youtube": "^1.0.4",
-      "@distube/ytdl-core": "^4.16.0",
+      "@distube/ytdl-core": "github:ryokr/ytdl-core",
       "discord.js": "^14.17.3",
       "distube": "^5.0.4",
       "dotenv": "^16.4.7",

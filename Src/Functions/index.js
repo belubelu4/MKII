@@ -31,7 +31,15 @@ async function playSong(interaction, name, position) {
       position,
       member: interaction.member,
       textChannel: interaction.channel,
-   }).catch((error) => console.log(error))
+   }).catch(async (error) => {
+      console.log(error)
+
+      await interaction.client.player.play(interaction.member.voice.channel, name, {
+         position,
+         member: interaction.member,
+         textChannel: interaction.channel,
+      })
+   })
 }
 async function getMix(url, api, handler) {
    try {
