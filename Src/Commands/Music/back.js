@@ -5,9 +5,7 @@ module.exports = class Back extends Command {
    constructor(client) {
       super(client)
       this.inVoice = true
-      this.data = new SlashCommandBuilder()
-         .setName('back')
-         .setDescription('✦ Back to previous song')
+      this.data = new SlashCommandBuilder().setName('back').setDescription('✦ Back to previous song')
    }
 
    async run(interaction, embed) {

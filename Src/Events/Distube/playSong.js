@@ -12,32 +12,19 @@ module.exports = class PlaySong extends Event {
       const { name, url, duration, isLive, user, source } = song
       const { actionRows, textChannel, voiceChannel } = queue
 
-      const getAuthorInfo = async (source) => {
-         switch (source) {
-            case 'youtube':
-               return {
-                  thumbnail,
-                  image: song.thumbnail,
-                  author: (await isFit(song.thumbnail)) ? author.youtubel : author.youtubes,
-               }
-            case 'spotify':
-            case 'soundcloud':
-               return {
-                  thumbnail: song.thumbnail,
-                  image: Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance,
-                  author: author[source],
-               }
-         }
-      }
+      const authorName = (await isFit(song.thumbnail)) ? author.large : author.small
 
-      const options = await getAuthorInfo(source)
+      const options = {
+         thumbnail: source === 'youtube' ? thumbnail : song.thumbnail,
+         image: ['spotify', 'soundcloud'].includes(source) ? (Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance) : song.thumbnail,
+      }
 
       queue.playerEmbed = new EmbedBuilder()
          .setColor(color)
          .setTimestamp()
          .setThumbnail(options.thumbnail)
          .setImage(options.image)
-         .setAuthor({ name: options.author, iconURL: icons[source] })
+         .setAuthor({ name: authorName, iconURL: icons[source] })
          .setDescription(`✦ **[${name}](${url.split('&list=')[0]})**\n✦ **<#${voiceChannel.id}>・${formatTime(duration, isLive)}**`)
          .setFooter({ text: `✦ 🧩 Requested by ${user.globalName}`, iconURL: user.avatarURL() })
 

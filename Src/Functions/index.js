@@ -190,11 +190,20 @@ function isMainGuild(id, guildId) {
 }
 
 // #region checkImage
+// async function isFit(url) {
+//    try {
+//       const response = await fetch(url, { method: 'HEAD' })
+//       return parseInt(response.headers.get('Content-Length'), 10) > 40000
+//    } catch {
+//       return false
+//    }
+// }
+
 async function isFit(url) {
-   try {
-      const response = await fetch(url, { method: 'HEAD' })
-      return parseInt(response.headers.get('Content-Length'), 10) > 40000
-   } catch {
-      return false
-   }
+   return new Promise((resolve) => {
+      const img = new Image()
+      img.src = url
+      img.onload = () => resolve(img.width * img.height >= 1280 * 720)
+      img.onerror = () => resolve(false)
+   })
 }
