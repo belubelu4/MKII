@@ -189,21 +189,14 @@ function isMainGuild(id, guildId) {
    return id === guildId
 }
 
-// #region checkImage
-// async function isFit(url) {
-//    try {
-//       const response = await fetch(url, { method: 'HEAD' })
-//       return parseInt(response.headers.get('Content-Length'), 10) > 40000
-//    } catch {
-//       return false
-//    }
-// }
-
+//#region checkImage
 async function isFit(url) {
-   return new Promise((resolve) => {
-      const img = new Image()
-      img.src = url
-      img.onload = () => resolve(img.width * img.height >= 1280 * 720)
-      img.onerror = () => resolve(false)
-   })
+   try {
+      const response = await fetch(url)
+      const blob = await response.blob()
+
+      return blob.size > 40_000
+   } catch {
+      return false
+   }
 }

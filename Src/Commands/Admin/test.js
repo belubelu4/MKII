@@ -11,7 +11,7 @@ module.exports = class Test extends Command {
    }
 
    async run(interaction, embed) {
-      const name = 'DLTTAD'
+      const name = 'Deathbed'
       const position = 0
       const message = await interaction.editReply({ embeds: [embed.setDescription('✦ Meowing')] })
 
