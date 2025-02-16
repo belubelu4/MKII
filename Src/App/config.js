@@ -7,6 +7,7 @@ module.exports = {
    strict: false,
    maintain: false,
    cookies: JSON.parse(process.env.cookies),
+   listLimit: parseInt(process.env.lim) || 300,
 
    guild: { id: '677858109145874433' },
    owner: { id: '677857271530651649' },

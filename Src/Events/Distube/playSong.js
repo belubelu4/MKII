@@ -16,8 +16,8 @@ module.exports = class PlaySong extends Event {
 
       const options = {
          thumbnail: source === 'youtube' ? thumbnail : song.thumbnail,
-         image: ['spotify', 'soundcloud'].includes(source) ? (Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance) : song.thumbnail,
-      }
+         image: source === 'youtube' ? song.thumbnail : (Math.random() < 0.5 ? imageRoxy.high : imageRoxy.dance),
+      }      
 
       queue.playerEmbed = new EmbedBuilder()
          .setColor(color)

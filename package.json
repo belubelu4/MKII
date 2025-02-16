@@ -10,7 +10,7 @@
       "distube": "^5.0.4",
       "dotenv": "^16.4.7",
       "googleapis": "^144.0.0",
-      "sodium-native": "^4.3.1"
+      "sodium-native": "^4.3.2"
    },
    "engines": {
       "node": "20.x"
